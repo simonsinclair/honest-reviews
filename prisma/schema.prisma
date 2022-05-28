@@ -7,3 +7,39 @@ generator client {
   provider = "prisma-client-js"
 }
 
+model Product {
+  id String @id @default(cuid())
+
+  createdAt DateTime @default(now())
+
+  name        String
+  description String
+
+  reviews Review[]
+}
+
+model User {
+  id    String @id @default(cuid())
+  email String @unique
+
+  createdAt DateTime @default(now())
+
+  name String
+
+  reviews Review[]
+}
+
+model Review {
+  id String @id @default(cuid())
+
+  createdAt DateTime @default(now())
+
+  rating Int
+  body   String
+
+  User   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String @unique
+
+  Product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId String
+}
