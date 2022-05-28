@@ -1,5 +1,5 @@
 /.cache
+/app/css
 /build
 node_modules
 /public/build
-/app/css
