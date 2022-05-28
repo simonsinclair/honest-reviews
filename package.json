@@ -8,6 +8,7 @@
     "dev": "concurrently \"npm run dev:tailwind\" \"npm run dev:remix\"",
     "dev:remix": "remix dev",
     "dev:tailwind": "tailwindcss -i ./css/main.css -o ./app/css/main.css --watch",
+    "dev:init": "prisma migrate reset --force",
     "start": "remix-serve build"
   },
   "dependencies": {
