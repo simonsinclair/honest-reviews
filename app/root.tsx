@@ -1,4 +1,4 @@
-import type { MetaFunction, LinksFunction } from "@remix-run/node";
+import type { MetaFunction, LinksFunction } from '@remix-run/node';
 import {
   Links,
   LiveReload,
@@ -6,14 +6,14 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
-} from "@remix-run/react";
+} from '@remix-run/react';
 
 import css from '~/css/main.css';
 
 export const meta: MetaFunction = () => ({
-  charset: "utf-8",
-  title: "Honest Reviews",
-  viewport: "width=device-width,initial-scale=1",
+  charset: 'utf-8',
+  title: 'Honest Reviews',
+  viewport: 'width=device-width,initial-scale=1',
 });
 
 export const links: LinksFunction = () => {
