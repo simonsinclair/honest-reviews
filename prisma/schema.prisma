@@ -32,7 +32,8 @@ model User {
 model Review {
   id String @id @default(cuid())
 
-  createdAt DateTime @default(now())
+  createdAt    DateTime @default(now())
+  createdAtDay DateTime
 
   rating Int
   body   String

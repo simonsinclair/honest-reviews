@@ -25,7 +25,11 @@ const seed = async () => {
   );
 
   for (const user of users) {
-    const createdAt = faker.date.past(2);
+    const pastDate = faker.date.past(2);
+    const createdAt = faker.date.between(pastDate, Date.now());
+    const createdAtDay = new Date(createdAt);
+    createdAtDay.setUTCHours(0, 0, 0, 0);
+
     await prisma.user.create({
       data: {
         email: user.email,
@@ -38,7 +42,8 @@ const seed = async () => {
               faker.datatype.number({ min: 1, max: 3 }),
             ),
             productId: product.id,
-            createdAt: faker.date.between(createdAt, Date.now()),
+            createdAt,
+            createdAtDay,
           },
         },
       },
