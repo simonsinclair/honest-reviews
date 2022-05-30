@@ -89,69 +89,71 @@ const ProductPage = () => {
         <p>{product.description}</p>
       </div>
       <div className="grid grid-cols-12 gap-4">
-        <div className="col-span-full rounded-lg bg-white p-4 shadow lg:col-span-8">
+        <div className="col-span-full space-y-4 rounded-lg bg-white p-4 shadow lg:col-span-8">
           <h2>Write a review</h2>
           <Form method="post" className="flex flex-col gap-4">
-            <div className="flex flex-col gap-4 border-b pb-4">
-              <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-4 sm:flex-row">
+              <div className="flex w-full flex-col gap-1">
                 <label htmlFor="name">Your name</label>
                 <input
                   type="text"
+                  className="rounded-lg border p-2"
                   name="name"
                   id="name"
                   placeholder="Jane Doe"
                 />
               </div>
-              <div className="flex flex-col gap-2">
+              <div className="flex w-full flex-col gap-1">
                 <label htmlFor="email">Your email</label>
                 <input
                   type="email"
+                  className="rounded-lg border p-2"
                   name="email"
                   id="email"
                   placeholder="jane.reviews@gmail.com"
                 />
               </div>
             </div>
-            <fieldset>
+            <fieldset className="flex flex-col gap-1">
               <legend>Rating</legend>
               <div className="flex gap-4">
-                <div>
+                <div className="flex flex-col items-center">
                   <label htmlFor="rating-1">1</label>
                   <input type="radio" name="rating" id="rating-1" value="1" />
                 </div>
-                <div>
+                <div className="flex flex-col items-center">
                   <label htmlFor="rating-2">2</label>
                   <input type="radio" name="rating" id="rating-2" value="2" />
                 </div>
-                <div>
+                <div className="flex flex-col items-center">
                   <label htmlFor="rating-3">3</label>
                   <input type="radio" name="rating" id="rating-3" value="3" />
                 </div>
-                <div>
+                <div className="flex flex-col items-center">
                   <label htmlFor="rating-4">4</label>
                   <input type="radio" name="rating" id="rating-4" value="4" />
                 </div>
-                <div>
+                <div className="flex flex-col items-center">
                   <label htmlFor="rating-5">5</label>
                   <input type="radio" name="rating" id="rating-5" value="5" />
                 </div>
               </div>
             </fieldset>
-            <div className="flex flex-col">
+            <div className="flex flex-col gap-1">
               <label htmlFor="body">Review</label>
               <small>Keep it honest, helpful, and constructive.</small>
               <textarea
                 name="body"
                 id="body"
-                cols={30}
-                rows={10}
-                className="border"
+                cols={20}
+                rows={5}
+                className="resize-y rounded-lg border"
               ></textarea>
             </div>
             <div className="flex justify-end">
               <button
                 type="submit"
-                className="w-full rounded-lg bg-sky-300 px-5 py-3 text-lg font-bold antialiased transition-colors hover:bg-sky-200 sm:w-auto"
+                className="w-full rounded-lg bg-sky-300 px-5 py-3 font-bold antialiased transition-colors hover:bg-sky-200 sm:w-auto"
               >
                 Post review
               </button>
