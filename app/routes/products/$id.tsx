@@ -103,6 +103,7 @@ const ProductPage = () => {
                   name="name"
                   id="name"
                   placeholder="Jane Doe"
+                  required
                 />
               </div>
               <div className="flex w-full flex-col gap-1">
@@ -113,6 +114,7 @@ const ProductPage = () => {
                   name="email"
                   id="email"
                   placeholder="jane.reviews@gmail.com"
+                  required
                 />
               </div>
             </div>
@@ -121,23 +123,53 @@ const ProductPage = () => {
               <div className="flex gap-4">
                 <div className="flex flex-col items-center">
                   <label htmlFor="rating-1">1</label>
-                  <input type="radio" name="rating" id="rating-1" value="1" />
+                  <input
+                    type="radio"
+                    name="rating"
+                    id="rating-1"
+                    value="1"
+                    required
+                  />
                 </div>
                 <div className="flex flex-col items-center">
                   <label htmlFor="rating-2">2</label>
-                  <input type="radio" name="rating" id="rating-2" value="2" />
+                  <input
+                    type="radio"
+                    name="rating"
+                    id="rating-2"
+                    value="2"
+                    required
+                  />
                 </div>
                 <div className="flex flex-col items-center">
                   <label htmlFor="rating-3">3</label>
-                  <input type="radio" name="rating" id="rating-3" value="3" />
+                  <input
+                    type="radio"
+                    name="rating"
+                    id="rating-3"
+                    value="3"
+                    required
+                  />
                 </div>
                 <div className="flex flex-col items-center">
                   <label htmlFor="rating-4">4</label>
-                  <input type="radio" name="rating" id="rating-4" value="4" />
+                  <input
+                    type="radio"
+                    name="rating"
+                    id="rating-4"
+                    value="4"
+                    required
+                  />
                 </div>
                 <div className="flex flex-col items-center">
                   <label htmlFor="rating-5">5</label>
-                  <input type="radio" name="rating" id="rating-5" value="5" />
+                  <input
+                    type="radio"
+                    name="rating"
+                    id="rating-5"
+                    value="5"
+                    required
+                  />
                 </div>
               </div>
             </fieldset>
@@ -150,6 +182,7 @@ const ProductPage = () => {
                 cols={20}
                 rows={5}
                 className="resize-y rounded-lg border"
+                required
               ></textarea>
             </div>
             <div className="flex justify-end">
