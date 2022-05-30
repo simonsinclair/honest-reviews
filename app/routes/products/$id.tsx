@@ -10,6 +10,7 @@ import invariant from 'tiny-invariant';
 import { getProductById } from '~/models/product.server';
 import {
   getAverageDailyRatingsByProductId,
+  getReviewsByProductId,
   getRatingByProductId,
 } from '~/models/review.server';
 
@@ -20,6 +21,7 @@ type LoaderData = {
     data: ChartDataset<'line'>['data'];
   };
   rating: NonNullable<Prisma.PromiseReturnType<typeof getRatingByProductId>>;
+  reviews: NonNullable<Prisma.PromiseReturnType<typeof getReviewsByProductId>>;
 };
 
 export const meta: MetaFunction = ({ data }) => {
@@ -38,7 +40,7 @@ export const meta: MetaFunction = ({ data }) => {
 
 const ProductPage = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null!);
-  const { product, chart, rating } = useLoaderData<LoaderData>();
+  const { product, chart, rating, reviews } = useLoaderData<LoaderData>();
 
   useEffect(() => {
     Chart.register(...registerables);
@@ -166,11 +168,37 @@ const ProductPage = () => {
             <canvas ref={canvasRef}>{/* To do: accessible content */}</canvas>
           </div>
         </div>
-        <div className="col-span-full rounded-lg bg-white p-4 shadow lg:col-span-8">
-          <h2 className="border-b pb-4" id="reviews">
-            Reviews <span className="text-gray-400">{rating._count}</span>
+        <section className="col-span-full rounded-lg bg-white p-4 shadow lg:col-span-8">
+          <h2 className="flex items-center gap-2 border-b pb-4" id="reviews">
+            Reviews{' '}
+            <span className="rounded bg-sky-900 py-1 px-1.5 font-mono text-sm font-bold leading-none text-white antialiased">
+              {rating._count}
+            </span>
           </h2>
-        </div>
+          <div className="divide-y">
+            {reviews.map(({ id, body, createdAt, rating, User }) => {
+              return (
+                <article key={id} className="flex flex-col-reverse gap-4 py-4">
+                  {body.split('\n').map((paragraph, index) => (
+                    <p key={index}>{paragraph}</p>
+                  ))}
+                  <footer className="flex justify-between gap-4">
+                    <div className="flex flex-col gap-1">
+                      <a href={`mailto:${User.email}`} className="font-bold">
+                        {User.name}
+                      </a>
+                      <span className="opacity-75">{rating} stars</span>
+                    </div>
+                    <time dateTime={createdAt.toString()}>
+                      {createdAt.toString()}
+                    </time>
+                  </footer>
+                </article>
+              );
+            })}
+            <div className="flex justify-center pt-6 pb-2">Pagination</div>
+          </div>
+        </section>
       </div>
     </div>
   );
@@ -184,6 +212,7 @@ export const loader: LoaderFunction = async ({ params }) => {
   if (!product) throw new Response('Not Found', { status: 404 });
 
   const rating = await getRatingByProductId({ id });
+  const reviews = await getReviewsByProductId({ id });
 
   const SME_DAYS = 30;
   const RANGE_DAYS = SME_DAYS * 6;
@@ -219,6 +248,7 @@ export const loader: LoaderFunction = async ({ params }) => {
       data: chartData,
     },
     rating,
+    reviews,
   };
 
   return json(data);

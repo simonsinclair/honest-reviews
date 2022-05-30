@@ -12,6 +12,27 @@ export const getRatingByProductId = async ({ id }: { id: string }) => {
   });
 };
 
+export const getReviewsByProductId = async ({
+  id,
+  skip = 0,
+  take = 20,
+}: {
+  id: string;
+  skip?: number;
+  take?: number;
+}) => {
+  return await prisma.review.findMany({
+    where: {
+      productId: id,
+    },
+    skip,
+    take,
+    include: {
+      User: true,
+    },
+  });
+};
+
 export const getAverageDailyRatingsByProductId = async ({
   id,
   take,
