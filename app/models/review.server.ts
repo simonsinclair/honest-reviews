@@ -27,6 +27,9 @@ export const getReviewsByProductId = async ({
     },
     skip,
     take,
+    orderBy: {
+      createdAt: 'desc',
+    },
     include: {
       User: true,
     },
