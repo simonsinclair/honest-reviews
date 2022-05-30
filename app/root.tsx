@@ -9,6 +9,7 @@ import {
 } from '@remix-run/react';
 
 import css from '~/css/main.css';
+import { Footer } from './components/Footer';
 import { Masthead } from './components/Masthead';
 
 export const meta: MetaFunction = () => ({
@@ -36,6 +37,7 @@ export default function App() {
       <body>
         <Outlet />
         <Masthead />
+        <Footer />
         <ScrollRestoration />
         <Scripts />
         <LiveReload />
