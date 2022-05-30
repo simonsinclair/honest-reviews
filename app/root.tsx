@@ -34,9 +34,11 @@ export default function App() {
         <Meta />
         <Links />
       </head>
-      <body>
-        <Outlet />
+      <body className="flex min-h-screen flex-col">
         <Masthead />
+        <div role="main" className="flex-grow">
+          <Outlet />
+        </div>
         <Footer />
         <ScrollRestoration />
         <Scripts />
