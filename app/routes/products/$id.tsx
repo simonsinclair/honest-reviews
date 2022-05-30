@@ -1,5 +1,5 @@
 import type { Prisma } from '@prisma/client';
-import type { LoaderFunction } from '@remix-run/node';
+import type { LoaderFunction, MetaFunction } from '@remix-run/node';
 import { json } from '@remix-run/node';
 import { Form, useLoaderData } from '@remix-run/react';
 import type { ChartData, ChartDataset } from 'chart.js';
@@ -22,6 +22,20 @@ type LoaderData = {
   averageRating: NonNullable<
     Prisma.PromiseReturnType<typeof getAverageRatingByProductId>
   >;
+};
+
+export const meta: MetaFunction = ({ data }) => {
+  if (data) {
+    const { product, averageRating } = data as LoaderData;
+    return {
+      title: `${product.name} – Honest Reviews`,
+      description: `Read what ${averageRating._count} honest reviewers have to say about ${product.name}.`,
+    };
+  }
+  return {
+    title: 'Product Not Found - Honest Reviews',
+    description: 'The requested product was not found.',
+  };
 };
 
 const ProductPage = () => {
