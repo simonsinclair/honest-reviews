@@ -7,6 +7,7 @@ import { Chart, registerables } from 'chart.js';
 import { useEffect, useRef } from 'react';
 import invariant from 'tiny-invariant';
 
+import { TimeFromNow } from '~/components/TimeFromNow';
 import { getProductById } from '~/models/product.server';
 import {
   getAverageDailyRatingsByProductId,
@@ -224,9 +225,7 @@ const ProductPage = () => {
                       </a>
                       <span className="opacity-75">{rating} stars</span>
                     </div>
-                    <time dateTime={createdAt.toString()}>
-                      {createdAt.toString()}
-                    </time>
+                    <TimeFromNow date={createdAt} />
                   </footer>
                 </article>
               );
