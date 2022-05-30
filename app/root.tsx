@@ -9,6 +9,7 @@ import {
 } from '@remix-run/react';
 
 import css from '~/css/main.css';
+import { Masthead } from './components/Masthead';
 
 export const meta: MetaFunction = () => ({
   charset: 'utf-8',
@@ -34,6 +35,7 @@ export default function App() {
       </head>
       <body>
         <Outlet />
+        <Masthead />
         <ScrollRestoration />
         <Scripts />
         <LiveReload />
