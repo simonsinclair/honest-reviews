@@ -181,7 +181,7 @@ const ProductPage = () => {
                 id="body"
                 cols={20}
                 rows={5}
-                className="resize-y rounded-lg border"
+                className="resize-y rounded-lg border p-2"
                 required
               ></textarea>
             </div>
