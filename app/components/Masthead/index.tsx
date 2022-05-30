@@ -9,7 +9,7 @@ export const Masthead = () => (
       <nav>
         <Link
           to="/products"
-          className="block border-b-4 border-b-sky-300 px-4 pt-6 pb-5 font-bold text-white hover:text-sky-200"
+          className="block border-b-4 border-b-sky-300 pt-6 pb-5 font-bold text-white hover:text-sky-200"
         >
           Products
         </Link>
