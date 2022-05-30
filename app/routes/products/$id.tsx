@@ -10,7 +10,7 @@ import invariant from 'tiny-invariant';
 import { getProductById } from '~/models/product.server';
 import {
   getAverageDailyRatingsByProductId,
-  getAverageRatingByProductId,
+  getRatingByProductId,
 } from '~/models/review.server';
 
 type LoaderData = {
@@ -19,17 +19,15 @@ type LoaderData = {
     labels: ChartData<'line'>['labels'];
     data: ChartDataset<'line'>['data'];
   };
-  averageRating: NonNullable<
-    Prisma.PromiseReturnType<typeof getAverageRatingByProductId>
-  >;
+  rating: NonNullable<Prisma.PromiseReturnType<typeof getRatingByProductId>>;
 };
 
 export const meta: MetaFunction = ({ data }) => {
   if (data) {
-    const { product, averageRating } = data as LoaderData;
+    const { product, rating } = data as LoaderData;
     return {
       title: `${product.name} – Honest Reviews`,
-      description: `Read what ${averageRating._count} honest reviewers have to say about ${product.name}.`,
+      description: `Read what ${rating._count} honest reviewers have to say about ${product.name}.`,
     };
   }
   return {
@@ -40,7 +38,7 @@ export const meta: MetaFunction = ({ data }) => {
 
 const ProductPage = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null!);
-  const { product, chart } = useLoaderData<LoaderData>();
+  const { product, chart, rating } = useLoaderData<LoaderData>();
 
   useEffect(() => {
     Chart.register(...registerables);
@@ -174,7 +172,7 @@ export const loader: LoaderFunction = async ({ params }) => {
   const product = await getProductById({ id });
   if (!product) throw new Response('Not Found', { status: 404 });
 
-  const averageRating = await getAverageRatingByProductId({ id });
+  const rating = await getRatingByProductId({ id });
 
   const SME_DAYS = 30;
   const RANGE_DAYS = SME_DAYS * 6;
@@ -209,7 +207,7 @@ export const loader: LoaderFunction = async ({ params }) => {
       labels: chartLabels,
       data: chartData,
     },
-    averageRating,
+    rating,
   };
 
   return json(data);
