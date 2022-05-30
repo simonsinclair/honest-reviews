@@ -7,13 +7,5 @@ export const getProductById = async ({ id }: { id: string }) => {
     where: {
       id,
     },
-    include: {
-      reviews: {
-        include: {
-          User: true,
-        },
-        take: 20,
-      },
-    },
   });
 };
