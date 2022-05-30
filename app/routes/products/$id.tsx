@@ -1,7 +1,7 @@
 import type { Prisma } from '@prisma/client';
 import type { LoaderFunction, MetaFunction } from '@remix-run/node';
 import { json } from '@remix-run/node';
-import { Form, useLoaderData } from '@remix-run/react';
+import { Form, Link, useLoaderData } from '@remix-run/react';
 import type { ChartData, ChartDataset } from 'chart.js';
 import { Chart, registerables } from 'chart.js';
 import { useEffect, useRef } from 'react';
@@ -79,6 +79,12 @@ const ProductPage = () => {
     <div className="container mx-auto space-y-4 p-4">
       <div className="space-y-4">
         <h1>{product.name}</h1>
+        <ul className="flex gap-4">
+          <li>
+            <Link to="#reviews">Reviews {rating._count}</Link>
+          </li>
+          {rating._avg.rating !== null ? <li>{rating._avg.rating}</li> : null}
+        </ul>
         <p>{product.description}</p>
       </div>
       <div className="grid grid-cols-12 gap-4">
@@ -158,7 +164,9 @@ const ProductPage = () => {
           </div>
         </div>
         <div className="col-span-full rounded-lg bg-white p-4 shadow lg:col-span-8">
-          <h2>Latest reviews</h2>
+          <h2 className="border-b pb-4" id="reviews">
+            Reviews <span className="text-gray-400">{rating._count}</span>
+          </h2>
         </div>
       </div>
     </div>
