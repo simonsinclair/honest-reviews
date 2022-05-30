@@ -34,7 +34,7 @@ export default function App() {
         <Meta />
         <Links />
       </head>
-      <body className="flex min-h-screen flex-col">
+      <body className="flex min-h-screen flex-col bg-gray-50">
         <Masthead />
         <div role="main" className="flex-grow">
           <Outlet />
