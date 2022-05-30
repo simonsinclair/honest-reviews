@@ -1,7 +1,6 @@
-export default function Index() {
-  return (
-    <div className="container mx-auto p-4">
-      <h1>Honest Reviews</h1>
-    </div>
-  );
-}
+import { redirect } from '@remix-run/node';
+import type { LoaderFunction } from '@remix-run/node';
+
+export const loader: LoaderFunction = () => {
+  return redirect('/products');
+};
