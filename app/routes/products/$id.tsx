@@ -8,27 +8,35 @@ import { useEffect, useRef } from 'react';
 import invariant from 'tiny-invariant';
 
 import { getProductById } from '~/models/product.server';
-import { getDailyRatingsByProductId } from '~/models/review.server';
+import {
+  getAverageDailyRatingsByProductId,
+  getAverageRatingByProductId,
+} from '~/models/review.server';
 
 type LoaderData = {
   product: NonNullable<Prisma.PromiseReturnType<typeof getProductById>>;
-  labels: ChartData<'line'>['labels'];
-  ratings: ChartDataset<'line'>['data'];
+  chart: {
+    labels: ChartData<'line'>['labels'];
+    data: ChartDataset<'line'>['data'];
+  };
+  averageRating: NonNullable<
+    Prisma.PromiseReturnType<typeof getAverageRatingByProductId>
+  >;
 };
 
 const ProductPage = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null!);
-  const { product, ratings, labels } = useLoaderData<LoaderData>();
+  const { product, chart } = useLoaderData<LoaderData>();
 
   useEffect(() => {
     Chart.register(...registerables);
     new Chart(canvasRef.current, {
       type: 'line',
       data: {
-        labels,
+        labels: chart.labels,
         datasets: [
           {
-            data: ratings,
+            data: chart.data,
             animation: false,
             pointRadius: 0,
             tension: 0.4,
@@ -53,7 +61,7 @@ const ProductPage = () => {
         },
       },
     });
-  }, [ratings, labels]);
+  }, [chart.data, chart.labels]);
 
   return (
     <div className="container mx-auto space-y-4 p-4">
@@ -148,13 +156,16 @@ const ProductPage = () => {
 export const loader: LoaderFunction = async ({ params }) => {
   const { id } = params;
   invariant(id, 'Expected parameter `id` to be defined.');
+
   const product = await getProductById({ id });
   if (!product) throw new Response('Not Found', { status: 404 });
+
+  const averageRating = await getAverageRatingByProductId({ id });
 
   const SME_DAYS = 30;
   const RANGE_DAYS = SME_DAYS * 6;
 
-  const dailyRatings = await getDailyRatingsByProductId({
+  const averageDailyRatings = await getAverageDailyRatingsByProductId({
     id,
     take: -RANGE_DAYS,
     order: 'desc',
@@ -163,25 +174,28 @@ export const loader: LoaderFunction = async ({ params }) => {
   /**
    * Calculate Simple Moving Average.
    */
-  let ratings: number[] = [];
-  let labels: string[] = [];
+  let chartData: number[] = [];
+  let chartLabels: string[] = [];
   let sum = 0;
   let smeDay = SME_DAYS;
-  for (let i = 0; i < dailyRatings.length; i++) {
+  for (let i = 0; i < averageDailyRatings.length; i++) {
     if (i > 0 && i % SME_DAYS === 0) {
-      labels.push(`Day ${smeDay}`);
+      chartLabels.push(`Day ${smeDay}`);
       smeDay += SME_DAYS;
-      ratings.push(sum / SME_DAYS);
+      chartData.push(sum / SME_DAYS);
       sum = 0;
     }
-    const rating = dailyRatings[i]._avg.rating;
+    const rating = averageDailyRatings[i]._avg.rating;
     if (rating !== null) sum += rating;
   }
 
   const data: LoaderData = {
     product,
-    labels,
-    ratings,
+    chart: {
+      labels: chartLabels,
+      data: chartData,
+    },
+    averageRating,
   };
 
   return json(data);

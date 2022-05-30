@@ -1,6 +1,18 @@
 import prisma from '~/services/database.server';
 
-export const getDailyRatingsByProductId = async ({
+export const getAverageRatingByProductId = async ({ id }: { id: string }) => {
+  return await prisma.review.aggregate({
+    where: {
+      productId: id,
+    },
+    _count: true,
+    _avg: {
+      rating: true,
+    },
+  });
+};
+
+export const getAverageDailyRatingsByProductId = async ({
   id,
   take,
   order,
