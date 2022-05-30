@@ -138,7 +138,7 @@ const ProductPage = () => {
           </div>
         </div>
         <div className="col-span-full rounded-lg bg-white p-4 shadow lg:col-span-8">
-          <h2>Reviews</h2>
+          <h2>Latest reviews</h2>
         </div>
       </div>
     </div>
