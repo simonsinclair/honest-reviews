@@ -42,7 +42,7 @@ const ProductPage = () => {
 
   useEffect(() => {
     Chart.register(...registerables);
-    new Chart(canvasRef.current, {
+    const ratingTrendChart = new Chart(canvasRef.current, {
       type: 'line',
       data: {
         labels: chart.labels,
@@ -73,6 +73,7 @@ const ProductPage = () => {
         },
       },
     });
+    return () => ratingTrendChart.destroy();
   }, [chart.data, chart.labels]);
 
   return (
