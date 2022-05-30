@@ -1,6 +1,6 @@
 import type { Product } from '@prisma/client';
 import { json } from '@remix-run/node';
-import type { LoaderFunction } from '@remix-run/node';
+import type { LoaderFunction, MetaFunction } from '@remix-run/node';
 import { Link, useLoaderData } from '@remix-run/react';
 
 import { getProducts } from '~/models/product.server';
@@ -8,6 +8,11 @@ import { getProducts } from '~/models/product.server';
 type LoaderData = {
   products: Product[];
 };
+
+export const meta: MetaFunction = () => ({
+  title: 'Products – Honest Reviews',
+  description: 'Discover the best products on Honest Reviews.',
+});
 
 const ProductsPage = () => {
   const { products } = useLoaderData<LoaderData>();
