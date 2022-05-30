@@ -55,6 +55,8 @@ const ProductPage = () => {
             pointRadius: 0,
             tension: 0.4,
             fill: true,
+            borderColor: 'rgb(125, 211, 252)',
+            backgroundColor: 'rgba(125, 211, 252, 0.5)',
           },
         ],
       },
