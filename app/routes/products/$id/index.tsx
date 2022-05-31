@@ -8,26 +8,25 @@ import { useEffect, useRef } from 'react';
 import invariant from 'tiny-invariant';
 
 import { TimeFromNow } from '~/components/TimeFromNow';
-import { getProductById } from '~/models/product.server';
+import { useRouteData } from '~/hooks/useRouteData';
 import {
   getAverageDailyRatingsByProductId,
   getReviewsByProductId,
-  getRatingByProductId,
 } from '~/models/review.server';
+import type { ProductLayoutLoaderData } from '../$id';
 
 type LoaderData = {
-  product: NonNullable<Prisma.PromiseReturnType<typeof getProductById>>;
   chart: {
     labels: ChartData<'line'>['labels'];
     data: ChartDataset<'line'>['data'];
   };
-  rating: NonNullable<Prisma.PromiseReturnType<typeof getRatingByProductId>>;
   reviews: NonNullable<Prisma.PromiseReturnType<typeof getReviewsByProductId>>;
 };
 
-export const meta: MetaFunction = ({ data }) => {
+export const meta: MetaFunction = ({ parentsData }) => {
+  const data = parentsData['routes/products/$id'];
   if (data) {
-    const { product, rating } = data as LoaderData;
+    const { product, rating } = data as ProductLayoutLoaderData;
     return {
       title: `${product.name} – Honest Reviews`,
       description: `Read what ${rating._count} honest reviewers have to say about ${product.name}.`,
@@ -41,7 +40,10 @@ export const meta: MetaFunction = ({ data }) => {
 
 const ProductPage = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null!);
-  const { chart, rating, reviews } = useLoaderData<LoaderData>();
+  const { chart, reviews } = useLoaderData<LoaderData>();
+  const { rating } = useRouteData<ProductLayoutLoaderData>(
+    'routes/products/$id',
+  );
 
   useEffect(() => {
     Chart.register(...registerables);
@@ -82,52 +84,52 @@ const ProductPage = () => {
   }, [chart.data, chart.labels]);
 
   return (
-    <div className="container mx-auto space-y-4 px-4">
-      <div className="grid grid-cols-12 gap-4">
-        <div className="col-span-full lg:col-span-4">
-          <div className="rounded-lg bg-white p-4 shadow-sm">
-            <h2>
-              Rating <span className="opacity-75">30-Day SMA</span>
-            </h2>
-            <canvas ref={canvasRef}>{/* To do: accessible content */}</canvas>
-          </div>
+    <div className="container mx-auto grid grid-cols-12 gap-4 px-4">
+      <div className="col-span-full lg:order-last lg:col-span-4">
+        <div className="rounded-lg bg-white p-4 shadow-sm">
+          <h2>
+            Rating <span className="opacity-75">30-Day SMA</span>
+          </h2>
+          <canvas ref={canvasRef}>{/* To do: accessible content */}</canvas>
         </div>
-        <section className="col-span-full rounded-lg bg-white p-4 shadow-sm lg:col-span-8">
-          <div className="flex items-center justify-between gap-4 border-b pb-4">
-            <h2 className="flex items-center gap-2" id="reviews">
-              Reviews{' '}
-              <span className="rounded bg-sky-900 py-1 px-1.5 font-mono text-sm font-bold leading-none text-white antialiased">
-                {rating._count}
-              </span>
-            </h2>
-            <Link to="reviews/new">Write a review</Link>
-          </div>
-          <div className="divide-y">
-            {reviews.map(({ id, body, createdAt, rating, User }) => {
-              return (
-                <article key={id} className="flex flex-col-reverse gap-4 py-4">
-                  {body.split('\n').map((paragraph, index) => (
-                    <p key={index}>{paragraph}</p>
-                  ))}
-                  <footer className="flex justify-between gap-4">
-                    <div className="flex flex-col gap-1">
-                      <a
-                        href={`mailto:${User.email}`}
-                        className="font-bold hover:underline"
-                      >
-                        {User.name}
-                      </a>
-                      <span className="opacity-75">{rating} stars</span>
-                    </div>
-                    <TimeFromNow date={createdAt} />
-                  </footer>
-                </article>
-              );
-            })}
-            <div className="flex justify-center pt-6 pb-2">Pagination</div>
-          </div>
-        </section>
       </div>
+      <section className="col-span-full rounded-lg bg-white p-4 shadow-sm lg:col-span-8">
+        <div className="flex items-center justify-between gap-4 border-b pb-4">
+          <h2 className="flex items-center gap-2" id="reviews">
+            Reviews{' '}
+            <span className="rounded bg-sky-900 py-1 px-1.5 font-mono text-sm font-bold leading-none text-white antialiased">
+              {rating._count}
+            </span>
+          </h2>
+          <Link to="reviews/new" className="font-bold hover:underline">
+            Write a review
+          </Link>
+        </div>
+        <div className="divide-y">
+          {reviews.map(({ id, body, createdAt, rating, User }) => {
+            return (
+              <article key={id} className="flex flex-col-reverse gap-4 py-4">
+                {body.split('\n').map((paragraph, index) => (
+                  <p key={index}>{paragraph}</p>
+                ))}
+                <footer className="flex justify-between gap-4">
+                  <div className="flex flex-col gap-1">
+                    <a
+                      href={`mailto:${User.email}`}
+                      className="font-bold hover:underline"
+                    >
+                      {User.name}
+                    </a>
+                    <span className="opacity-75">{rating} stars</span>
+                  </div>
+                  <TimeFromNow date={createdAt} />
+                </footer>
+              </article>
+            );
+          })}
+          <div className="flex justify-center pt-6 pb-2">Pagination</div>
+        </div>
+      </section>
     </div>
   );
 };
@@ -136,10 +138,6 @@ export const loader: LoaderFunction = async ({ params }) => {
   const { id } = params;
   invariant(id, 'Expected parameter `id` to be defined.');
 
-  const product = await getProductById({ id });
-  if (!product) throw new Response('Not Found', { status: 404 });
-
-  const rating = await getRatingByProductId({ id });
   const reviews = await getReviewsByProductId({ id });
 
   const SME_DAYS = 30;
@@ -170,12 +168,10 @@ export const loader: LoaderFunction = async ({ params }) => {
   }
 
   const data: LoaderData = {
-    product,
     chart: {
       labels: chartLabels,
       data: chartData,
     },
-    rating,
     reviews,
   };
 
