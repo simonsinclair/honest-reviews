@@ -1,7 +1,21 @@
-import type { ActionFunction } from '@remix-run/node';
+import type { Prisma } from '@prisma/client';
+import type {
+  ActionFunction,
+  LoaderFunction,
+  MetaFunction,
+} from '@remix-run/node';
 import { json, redirect } from '@remix-run/node';
-import { useActionData, useTransition, Form } from '@remix-run/react';
+import {
+  useActionData,
+  useTransition,
+  Form,
+  Link,
+  useLoaderData,
+} from '@remix-run/react';
 import invariant from 'tiny-invariant';
+
+import { getProductById } from '~/models/product.server';
+import { getRatingByProductId } from '~/models/review.server';
 import prisma from '~/services/database.server';
 
 type ActionData = {
@@ -14,7 +28,27 @@ type ActionData = {
   };
 };
 
+type LoaderData = {
+  product: NonNullable<Prisma.PromiseReturnType<typeof getProductById>>;
+  rating: NonNullable<Prisma.PromiseReturnType<typeof getRatingByProductId>>;
+};
+
+export const meta: MetaFunction = ({ data }) => {
+  if (data) {
+    const { product, rating } = data as LoaderData;
+    return {
+      title: `Review ${product.name} – Honest Reviews`,
+      description: `Join ${rating._count} honest reviewers in reviewing ${product.name}.`,
+    };
+  }
+  return {
+    title: 'Product Not Found - Honest Reviews',
+    description: 'The requested product was not found.',
+  };
+};
+
 const NewReviewPage = () => {
+  const { product } = useLoaderData<LoaderData>();
   const actionData = useActionData<ActionData>();
   const transition = useTransition();
 
@@ -124,22 +158,30 @@ const NewReviewPage = () => {
             required
           ></textarea>
         </div>
-        <div className="flex items-center justify-end gap-4">
-          {actionData?.error ? (
-            <p className="text-red-700">
-              There was an error posting your review.
-            </p>
-          ) : null}
-          <button
-            type="submit"
-            className="w-full rounded-lg bg-sky-300 px-5 py-3 font-bold antialiased transition-colors hover:bg-sky-200 sm:w-auto"
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <Link
+            to={`/products/${product.id}`}
+            className="w-full rounded-lg bg-gray-300 px-5 py-3 text-center font-bold antialiased transition-colors hover:bg-gray-200 sm:w-auto"
           >
-            {transition.state === 'submitting' ? (
-              <span>Posting review&hellip;</span>
-            ) : (
-              'Post review'
-            )}
-          </button>
+            Cancel
+          </Link>
+          <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-end">
+            {actionData?.error ? (
+              <p className="text-red-600">
+                There was an error posting your review.
+              </p>
+            ) : null}
+            <button
+              type="submit"
+              className="w-full rounded-lg bg-sky-300 px-5 py-3 font-bold antialiased transition-colors hover:bg-sky-200 sm:w-auto"
+            >
+              {transition.state === 'submitting' ? (
+                <span>Posting review&hellip;</span>
+              ) : (
+                'Post review'
+              )}
+            </button>
+          </div>
         </div>
       </Form>
     </div>
@@ -198,6 +240,23 @@ export const action: ActionFunction = async ({ params, request }) => {
   }
 
   return redirect(`/products/${productId}#reviews`);
+};
+
+export const loader: LoaderFunction = async ({ params }) => {
+  const { id } = params;
+  invariant(id, 'Expected parameter `id` to be defined.');
+
+  const product = await getProductById({ id });
+  if (!product) throw new Response('Not Found', { status: 404 });
+
+  const rating = await getRatingByProductId({ id });
+
+  const data: LoaderData = {
+    product,
+    rating,
+  };
+
+  return json(data);
 };
 
 export default NewReviewPage;
