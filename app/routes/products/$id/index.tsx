@@ -41,7 +41,7 @@ export const meta: MetaFunction = ({ data }) => {
 
 const ProductPage = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null!);
-  const { product, chart, rating, reviews } = useLoaderData<LoaderData>();
+  const { chart, rating, reviews } = useLoaderData<LoaderData>();
 
   useEffect(() => {
     Chart.register(...registerables);
@@ -82,17 +82,7 @@ const ProductPage = () => {
   }, [chart.data, chart.labels]);
 
   return (
-    <div className="container mx-auto space-y-4 p-4">
-      <div className="space-y-4">
-        <h1>{product.name}</h1>
-        <ul className="flex gap-4">
-          <li>
-            <Link to="#reviews">Reviews {rating._count}</Link>
-          </li>
-          {rating._avg.rating !== null ? <li>{rating._avg.rating}</li> : null}
-        </ul>
-        <p>{product.description}</p>
-      </div>
+    <div className="container mx-auto space-y-4 px-4">
       <div className="grid grid-cols-12 gap-4">
         <div className="col-span-full lg:col-span-4">
           <div className="rounded-lg bg-white p-4 shadow-sm">
