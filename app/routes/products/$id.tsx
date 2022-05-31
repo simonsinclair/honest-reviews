@@ -220,7 +220,10 @@ const ProductPage = () => {
                   ))}
                   <footer className="flex justify-between gap-4">
                     <div className="flex flex-col gap-1">
-                      <a href={`mailto:${User.email}`} className="font-bold">
+                      <a
+                        href={`mailto:${User.email}`}
+                        className="font-bold hover:underline"
+                      >
                         {User.name}
                       </a>
                       <span className="opacity-75">{rating} stars</span>
