@@ -53,7 +53,7 @@ const NewReviewPage = () => {
   const transition = useTransition();
 
   return (
-    <div className="container mx-auto space-y-4 rounded-lg bg-white p-4 shadow lg:col-span-8">
+    <div className="container mx-auto space-y-4 rounded-lg bg-white p-4 shadow-sm lg:col-span-8">
       <h2>Write a review</h2>
       <Form method="post" className="flex flex-col gap-4">
         <div className="flex flex-col gap-4 sm:flex-row">

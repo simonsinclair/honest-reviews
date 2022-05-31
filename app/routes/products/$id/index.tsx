@@ -95,14 +95,14 @@ const ProductPage = () => {
       </div>
       <div className="grid grid-cols-12 gap-4">
         <div className="col-span-full lg:col-span-4">
-          <div className="rounded-lg bg-white p-4 shadow">
+          <div className="rounded-lg bg-white p-4 shadow-sm">
             <h2>
               Rating <span className="opacity-75">30-Day SMA</span>
             </h2>
             <canvas ref={canvasRef}>{/* To do: accessible content */}</canvas>
           </div>
         </div>
-        <section className="col-span-full rounded-lg bg-white p-4 shadow lg:col-span-8">
+        <section className="col-span-full rounded-lg bg-white p-4 shadow-sm lg:col-span-8">
           <div className="flex items-center justify-between gap-4 border-b pb-4">
             <h2 className="flex items-center gap-2" id="reviews">
               Reviews{' '}
