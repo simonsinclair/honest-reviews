@@ -175,8 +175,8 @@ export const loader: LoaderFunction = async ({ params }) => {
       chartData.push(sum / SME_DAYS);
       sum = 0;
     }
-    const rating = averageDailyRatings[i]._avg.rating;
-    if (rating !== null) sum += rating;
+    const averageDailyRating = averageDailyRatings[i]._avg.rating;
+    if (averageDailyRating !== null) sum += averageDailyRating;
   }
 
   const data: LoaderData = {
