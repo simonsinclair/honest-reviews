@@ -19,7 +19,14 @@ const ProductLayout = () => {
     <>
       <div className="mb-4 bg-white shadow-sm">
         <div className="container mx-auto space-y-4 p-4">
-          <h1>{product.name}</h1>
+          <h1>
+            <Link
+              to={`/products/${product.id}`}
+              className="font-bold hover:underline"
+            >
+              {product.name}
+            </Link>
+          </h1>
           <ul className="flex gap-4">
             <li>
               <Link to="#reviews">Reviews {rating._count}</Link>
