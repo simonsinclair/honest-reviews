@@ -24,7 +24,7 @@ const NewReviewPage = () => {
       <Form method="post" className="flex flex-col gap-4">
         <div className="flex flex-col gap-4 sm:flex-row">
           <div className="flex w-full flex-col gap-1">
-            <label htmlFor="name">Your name</label>
+            <label htmlFor="name">Name</label>
             <input
               type="text"
               className="rounded-lg border p-2"
@@ -36,7 +36,7 @@ const NewReviewPage = () => {
             />
           </div>
           <div className="flex w-full flex-col gap-1">
-            <label htmlFor="email">Your email</label>
+            <label htmlFor="email">Email</label>
             <input
               type="email"
               className="rounded-lg border p-2"
@@ -112,7 +112,7 @@ const NewReviewPage = () => {
           </div>
         </fieldset>
         <div className="flex flex-col gap-1">
-          <label htmlFor="body">Review</label>
+          <label htmlFor="body">Comment</label>
           <small>Keep it honest, helpful, and constructive.</small>
           <textarea
             name="body"
