@@ -53,137 +53,139 @@ const NewReviewPage = () => {
   const transition = useTransition();
 
   return (
-    <div className="container mx-auto space-y-4 rounded-lg bg-white p-4 shadow-sm lg:col-span-8">
-      <h2>Write a review</h2>
-      <Form method="post" className="flex flex-col gap-4">
-        <div className="flex flex-col gap-4 sm:flex-row">
-          <div className="flex w-full flex-col gap-1">
-            <label htmlFor="name">Name</label>
-            <input
-              type="text"
-              className="rounded-lg border p-2"
-              name="name"
-              id="name"
-              defaultValue={actionData?.fields.name}
-              placeholder="Jane Doe"
-              required
-            />
-          </div>
-          <div className="flex w-full flex-col gap-1">
-            <label htmlFor="email">Email</label>
-            <input
-              type="email"
-              className="rounded-lg border p-2"
-              name="email"
-              id="email"
-              defaultValue={actionData?.fields.email}
-              placeholder="jane.reviews@gmail.com"
-              required
-            />
-          </div>
-        </div>
-        <fieldset
-          className="flex flex-col gap-1"
-          defaultValue={actionData?.fields.rating}
-        >
-          <legend>Rating</legend>
-          <div className="flex gap-4">
-            <div className="flex flex-col items-center">
-              <label htmlFor="rating-1">1</label>
+    <div className="container mx-auto grid grid-cols-12 px-4">
+      <div className="col-span-full space-y-4 rounded-lg bg-white p-4 shadow-sm lg:col-span-8 lg:col-start-3">
+        <h2>Write a review</h2>
+        <Form method="post" className="flex flex-col gap-4">
+          <div className="flex flex-col gap-4 sm:flex-row">
+            <div className="flex w-full flex-col gap-1">
+              <label htmlFor="name">Name</label>
               <input
-                type="radio"
-                name="rating"
-                id="rating-1"
-                value="1"
-                defaultChecked={actionData?.fields.rating === '1'}
+                type="text"
+                className="rounded-lg border p-2"
+                name="name"
+                id="name"
+                defaultValue={actionData?.fields.name}
+                placeholder="Jane Doe"
                 required
               />
             </div>
-            <div className="flex flex-col items-center">
-              <label htmlFor="rating-2">2</label>
+            <div className="flex w-full flex-col gap-1">
+              <label htmlFor="email">Email</label>
               <input
-                type="radio"
-                name="rating"
-                id="rating-2"
-                value="2"
-                defaultChecked={actionData?.fields.rating === '2'}
-                required
-              />
-            </div>
-            <div className="flex flex-col items-center">
-              <label htmlFor="rating-3">3</label>
-              <input
-                type="radio"
-                name="rating"
-                id="rating-3"
-                value="3"
-                defaultChecked={actionData?.fields.rating === '3'}
-                required
-              />
-            </div>
-            <div className="flex flex-col items-center">
-              <label htmlFor="rating-4">4</label>
-              <input
-                type="radio"
-                name="rating"
-                id="rating-4"
-                value="4"
-                defaultChecked={actionData?.fields.rating === '4'}
-                required
-              />
-            </div>
-            <div className="flex flex-col items-center">
-              <label htmlFor="rating-5">5</label>
-              <input
-                type="radio"
-                name="rating"
-                id="rating-5"
-                value="5"
-                defaultChecked={actionData?.fields.rating === '5'}
+                type="email"
+                className="rounded-lg border p-2"
+                name="email"
+                id="email"
+                defaultValue={actionData?.fields.email}
+                placeholder="jane.reviews@gmail.com"
                 required
               />
             </div>
           </div>
-        </fieldset>
-        <div className="flex flex-col gap-1">
-          <label htmlFor="body">Comment</label>
-          <small>Keep it honest, helpful, and constructive.</small>
-          <textarea
-            name="body"
-            id="body"
-            cols={20}
-            rows={5}
-            className="resize-y rounded-lg border p-2"
-            defaultValue={actionData?.fields.body}
-            required
-          ></textarea>
-        </div>
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <Link
-            to={`/products/${product.id}`}
-            className="w-full rounded-lg bg-gray-300 px-5 py-3 text-center font-bold antialiased transition-colors hover:bg-gray-200 sm:w-auto"
+          <fieldset
+            className="flex flex-col gap-1"
+            defaultValue={actionData?.fields.rating}
           >
-            Cancel
-          </Link>
-          <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-end">
+            <legend>Rating</legend>
+            <div className="flex gap-4">
+              <div className="flex flex-col items-center">
+                <label htmlFor="rating-1">1</label>
+                <input
+                  type="radio"
+                  name="rating"
+                  id="rating-1"
+                  value="1"
+                  defaultChecked={actionData?.fields.rating === '1'}
+                  required
+                />
+              </div>
+              <div className="flex flex-col items-center">
+                <label htmlFor="rating-2">2</label>
+                <input
+                  type="radio"
+                  name="rating"
+                  id="rating-2"
+                  value="2"
+                  defaultChecked={actionData?.fields.rating === '2'}
+                  required
+                />
+              </div>
+              <div className="flex flex-col items-center">
+                <label htmlFor="rating-3">3</label>
+                <input
+                  type="radio"
+                  name="rating"
+                  id="rating-3"
+                  value="3"
+                  defaultChecked={actionData?.fields.rating === '3'}
+                  required
+                />
+              </div>
+              <div className="flex flex-col items-center">
+                <label htmlFor="rating-4">4</label>
+                <input
+                  type="radio"
+                  name="rating"
+                  id="rating-4"
+                  value="4"
+                  defaultChecked={actionData?.fields.rating === '4'}
+                  required
+                />
+              </div>
+              <div className="flex flex-col items-center">
+                <label htmlFor="rating-5">5</label>
+                <input
+                  type="radio"
+                  name="rating"
+                  id="rating-5"
+                  value="5"
+                  defaultChecked={actionData?.fields.rating === '5'}
+                  required
+                />
+              </div>
+            </div>
+          </fieldset>
+          <div className="flex flex-col gap-1">
+            <label htmlFor="body">Comment</label>
+            <small>Keep it honest, helpful, and constructive.</small>
+            <textarea
+              name="body"
+              id="body"
+              cols={20}
+              rows={5}
+              className="resize-y rounded-lg border p-2"
+              defaultValue={actionData?.fields.body}
+              required
+            ></textarea>
+          </div>
+          <div className="flex flex-col items-end gap-4">
             {actionData?.error ? (
               <p className="text-red-600">
                 There was an error posting your review.
               </p>
             ) : null}
-            <button
-              type="submit"
-              className="w-full rounded-lg bg-sky-300 px-5 py-3 font-bold antialiased transition-colors hover:bg-sky-200 sm:w-auto"
-            >
-              {transition.state === 'submitting' ? (
-                <span>Posting review&hellip;</span>
-              ) : (
-                'Post review'
-              )}
-            </button>
+            <div className="flex w-full items-center justify-between gap-4">
+              <Link
+                to={`/products/${product.id}`}
+                className="text-center font-bold hover:underline"
+              >
+                Cancel
+              </Link>
+              <button
+                type="submit"
+                className="rounded-lg bg-sky-300 px-5 py-3 font-bold antialiased transition-colors hover:bg-sky-200"
+              >
+                {transition.state === 'submitting' ? (
+                  <span>Posting review&hellip;</span>
+                ) : (
+                  'Post review'
+                )}
+              </button>
+            </div>
           </div>
-        </div>
-      </Form>
+        </Form>
+      </div>
     </div>
   );
 };
