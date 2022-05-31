@@ -7,17 +7,17 @@ import invariant from 'tiny-invariant';
 import { getProductById } from '~/models/product.server';
 import { getRatingByProductId } from '~/models/review.server';
 
-type LoaderData = {
+export type ProductLayoutLoaderData = {
   product: NonNullable<Prisma.PromiseReturnType<typeof getProductById>>;
   rating: NonNullable<Prisma.PromiseReturnType<typeof getRatingByProductId>>;
 };
 
 const ProductLayout = () => {
-  const { product, rating } = useLoaderData<LoaderData>();
+  const { product, rating } = useLoaderData<ProductLayoutLoaderData>();
 
   return (
     <>
-      <div className="bg-white shadow-sm mb-4">
+      <div className="mb-4 bg-white shadow-sm">
         <div className="container mx-auto space-y-4 p-4">
           <h1>{product.name}</h1>
           <ul className="flex gap-4">
@@ -43,7 +43,7 @@ export const loader: LoaderFunction = async ({ params }) => {
 
   const rating = await getRatingByProductId({ id });
 
-  const data: LoaderData = {
+  const data: ProductLayoutLoaderData = {
     product,
     rating,
   };
