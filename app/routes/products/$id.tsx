@@ -33,7 +33,7 @@ const ProductLayout = () => {
             </li>
             {rating._avg.rating !== null ? <li>{rating._avg.rating}</li> : null}
           </ul>
-          <p>{product.description}</p>
+          <p className="max-w-prose">{product.description}</p>
         </div>
       </div>
       <Outlet />
