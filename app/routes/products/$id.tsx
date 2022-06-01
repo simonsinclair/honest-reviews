@@ -3,9 +3,11 @@ import type { LoaderFunction } from '@remix-run/node';
 import { json } from '@remix-run/node';
 import { Link, Outlet, useLoaderData } from '@remix-run/react';
 import invariant from 'tiny-invariant';
+import { StarRating } from '~/components/StarRating';
 
 import { getProductById } from '~/models/product.server';
 import { getRatingByProductId } from '~/models/review.server';
+import { getValueRoundedToDecimalPlaces } from '~/utils';
 
 export type ProductLayoutLoaderData = {
   product: NonNullable<Prisma.PromiseReturnType<typeof getProductById>>;
@@ -15,10 +17,15 @@ export type ProductLayoutLoaderData = {
 const ProductLayout = () => {
   const { product, rating } = useLoaderData<ProductLayoutLoaderData>();
 
+  const averageRatingRounded = getValueRoundedToDecimalPlaces(
+    rating?._avg?.rating ?? 0,
+    1,
+  );
+
   return (
     <>
       <div className="mb-4 bg-white shadow-sm">
-        <div className="container mx-auto space-y-4 p-4">
+        <div className="container mx-auto space-y-2 px-4 py-6">
           <h1>
             <Link
               to={`/products/${product.id}`}
@@ -27,12 +34,15 @@ const ProductLayout = () => {
               {product.name}
             </Link>
           </h1>
-          <ul className="flex gap-4">
-            <li>
-              <Link to="#reviews">Reviews {rating._count}</Link>
-            </li>
-            {rating._avg.rating !== null ? <li>{rating._avg.rating}</li> : null}
-          </ul>
+          <div className="flex items-center gap-2">
+            <StarRating rating={averageRatingRounded} size={20} />
+            <span
+              aria-hidden
+              className="leading-none opacity-75 before:mr-2 before:content-['•']"
+            >
+              {averageRatingRounded} ({rating._count} reviews)
+            </span>
+          </div>
           <p className="max-w-prose">{product.description}</p>
         </div>
       </div>
