@@ -101,8 +101,11 @@ const ProductPage = () => {
               {rating._count}
             </span>
           </h2>
-          <Link to="reviews/new" className="text-lg font-bold hover:underline">
-            Write a review
+          <Link
+            to="reviews/new"
+            className="flex items-center gap-1.5 text-lg font-bold hover:underline"
+          >
+            Write a review <EditIcon aria-hidden />
           </Link>
         </div>
         <div className="divide-y">
