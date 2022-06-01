@@ -15,7 +15,7 @@ export const getRatingByProductId = async ({ id }: { id: string }) => {
 export const getReviewsByProductId = async ({
   id,
   skip = 0,
-  take = 20,
+  take = 10,
 }: {
   id: string;
   skip?: number;
