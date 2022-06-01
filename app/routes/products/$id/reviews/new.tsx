@@ -54,7 +54,7 @@ const NewReviewPage = () => {
 
   return (
     <div className="container mx-auto grid grid-cols-12 px-4">
-      <div className="col-span-full space-y-4 rounded-lg bg-white p-4 shadow-sm lg:col-span-8 lg:col-start-3">
+      <div className="col-span-full space-y-4 rounded-lg bg-white p-4 shadow-sm lg:col-span-8">
         <h2>Write a review</h2>
         <Form method="post" className="flex flex-col gap-4">
           <div className="flex flex-col gap-4 sm:flex-row">
@@ -168,7 +168,7 @@ const NewReviewPage = () => {
             <div className="flex w-full items-center justify-between gap-4">
               <Link
                 to={`/products/${product.id}`}
-                className="text-center font-bold hover:underline"
+                className="ml-5 text-center font-bold hover:underline"
               >
                 Cancel
               </Link>

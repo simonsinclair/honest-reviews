@@ -29,7 +29,7 @@ const ProductsPage = () => {
           <div className="grid grid-cols-12 gap-4">
             {products.map(({ id, name, description }) => (
               <div
-                className="col-span-full space-y-2 rounded-lg bg-white p-4 shadow-sm lg:col-span-8 lg:col-start-3"
+                className="col-span-full space-y-2 rounded-lg bg-white p-4 shadow-sm lg:col-span-8"
                 key={id}
               >
                 <h2>
