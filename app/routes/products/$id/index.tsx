@@ -120,7 +120,10 @@ const ProductPage = () => {
                     >
                       {User.name}
                     </a>
-                    <span className="opacity-75">{rating} stars</span>
+                    <StarRating
+                      rating={getValueRoundedToDecimalPlaces(rating, 1)}
+                      size={14}
+                    />
                   </div>
                   <TimeFromNow date={createdAt} />
                 </footer>
