@@ -88,7 +88,7 @@ const ProductPage = () => {
       <div className="col-span-full lg:order-last lg:col-span-4">
         <div className="space-y-4 rounded-lg bg-white p-4 shadow-sm">
           <h2>
-            Rating <span className="opacity-75">30-Day SMA</span>
+            Rating trend <span className="opacity-75">30-Day SMA</span>
           </h2>
           <canvas ref={canvasRef}>{/* To do: accessible content */}</canvas>
         </div>
