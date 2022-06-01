@@ -96,10 +96,7 @@ const ProductPage = () => {
       <section className="col-span-full rounded-lg bg-white p-4 shadow-sm lg:col-span-8">
         <div className="flex items-center justify-between gap-4 border-b pb-4">
           <h2 className="flex items-center gap-2" id="reviews">
-            Reviews{' '}
-            <span className="rounded bg-sky-900 py-1 px-1.5 font-mono text-sm font-bold leading-none text-white antialiased">
-              {rating._count}
-            </span>
+            Reviews <span className="opacity-75">{rating._count}</span>
           </h2>
           <Link
             to="reviews/new"
