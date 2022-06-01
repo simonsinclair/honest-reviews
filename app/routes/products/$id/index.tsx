@@ -86,7 +86,7 @@ const ProductPage = () => {
   return (
     <div className="container mx-auto grid grid-cols-12 gap-4 px-4">
       <div className="col-span-full lg:order-last lg:col-span-4">
-        <div className="rounded-lg bg-white p-4 shadow-sm">
+        <div className="space-y-4 rounded-lg bg-white p-4 shadow-sm">
           <h2>
             Rating <span className="opacity-75">30-Day SMA</span>
           </h2>
