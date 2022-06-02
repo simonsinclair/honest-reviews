@@ -174,8 +174,7 @@ export const action: ActionFunction = async ({ params, request }) => {
         },
       },
     });
-  } catch (error) {
-    console.error(error);
+  } catch {
     const fields = Object.fromEntries(formData);
     return json({ error: true, fields });
   }
