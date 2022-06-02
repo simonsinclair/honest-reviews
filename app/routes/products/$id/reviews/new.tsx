@@ -104,13 +104,7 @@ const NewReviewPage = () => {
                 There was an error posting your review.
               </p>
             ) : null}
-            <div className="flex w-full items-center justify-between gap-4">
-              <Link
-                to={`/products/${product.id}`}
-                className="ml-5 text-center font-bold hover:underline"
-              >
-                Cancel
-              </Link>
+            <div className="flex w-full flex-row-reverse items-center justify-between gap-4">
               <button
                 type="submit"
                 className="rounded-lg bg-sky-300 px-5 py-3 font-bold antialiased transition-colors hover:bg-sky-200"
@@ -121,6 +115,12 @@ const NewReviewPage = () => {
                   'Post review'
                 )}
               </button>
+              <Link
+                to={`/products/${product.id}`}
+                className="ml-5 text-center font-bold hover:underline"
+              >
+                Cancel
+              </Link>
             </div>
           </div>
         </Form>
