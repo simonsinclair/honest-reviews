@@ -13,6 +13,7 @@ import {
   useLoaderData,
 } from '@remix-run/react';
 import invariant from 'tiny-invariant';
+import { StarRatingInput } from '~/components/StarRatingInput';
 
 import { getProductById } from '~/models/product.server';
 import { getRatingByProductId } from '~/models/review.server';
@@ -83,69 +84,7 @@ const NewReviewPage = () => {
               />
             </div>
           </div>
-          <fieldset
-            className="flex flex-col gap-1"
-            defaultValue={actionData?.fields.rating}
-          >
-            <legend>Rating</legend>
-            <div className="flex gap-4">
-              <div className="flex flex-col items-center">
-                <label htmlFor="rating-1">1</label>
-                <input
-                  type="radio"
-                  name="rating"
-                  id="rating-1"
-                  value="1"
-                  defaultChecked={actionData?.fields.rating === '1'}
-                  required
-                />
-              </div>
-              <div className="flex flex-col items-center">
-                <label htmlFor="rating-2">2</label>
-                <input
-                  type="radio"
-                  name="rating"
-                  id="rating-2"
-                  value="2"
-                  defaultChecked={actionData?.fields.rating === '2'}
-                  required
-                />
-              </div>
-              <div className="flex flex-col items-center">
-                <label htmlFor="rating-3">3</label>
-                <input
-                  type="radio"
-                  name="rating"
-                  id="rating-3"
-                  value="3"
-                  defaultChecked={actionData?.fields.rating === '3'}
-                  required
-                />
-              </div>
-              <div className="flex flex-col items-center">
-                <label htmlFor="rating-4">4</label>
-                <input
-                  type="radio"
-                  name="rating"
-                  id="rating-4"
-                  value="4"
-                  defaultChecked={actionData?.fields.rating === '4'}
-                  required
-                />
-              </div>
-              <div className="flex flex-col items-center">
-                <label htmlFor="rating-5">5</label>
-                <input
-                  type="radio"
-                  name="rating"
-                  id="rating-5"
-                  value="5"
-                  defaultChecked={actionData?.fields.rating === '5'}
-                  required
-                />
-              </div>
-            </div>
-          </fieldset>
+          <StarRatingInput value={actionData?.fields.rating} />
           <div className="flex flex-col gap-1">
             <label htmlFor="body">Comment</label>
             <small>Keep it honest, helpful, and constructive.</small>
