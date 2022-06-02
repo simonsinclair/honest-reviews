@@ -157,7 +157,7 @@ const ProductPage = () => {
               {currentPage > 1 ? (
                 <Link
                   to={`?page=${currentPage - 1}`}
-                  className="flex items-center rounded-full p-2 shadow transition-colors hover:shadow-md"
+                  className="flex items-center rounded-full p-2 shadow hover:shadow-sky-400"
                 >
                   <span className="sr-only">Previous</span>
                   <ChevronLeftIcon
@@ -170,7 +170,7 @@ const ProductPage = () => {
               {currentPage < totalPages ? (
                 <Link
                   to={`?page=${currentPage + 1}`}
-                  className="flex items-center rounded-full p-2 shadow transition-colors hover:shadow-md"
+                  className="flex items-center rounded-full p-2 shadow hover:shadow-sky-400"
                 >
                   <span className="sr-only">Next</span>
                   <ChevronRightIcon
