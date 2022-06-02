@@ -6,6 +6,10 @@ import type { ChartData, ChartDataset } from 'chart.js';
 import { Chart, registerables } from 'chart.js';
 import { useEffect, useRef } from 'react';
 import invariant from 'tiny-invariant';
+import {
+  EditIcon,
+} from '~/components/Icons';
+import { StarRating } from '~/components/StarRating';
 
 import { TimeFromNow } from '~/components/TimeFromNow';
 import { useRouteData } from '~/hooks/useRouteData';
