@@ -84,7 +84,7 @@ const NewReviewPage = () => {
               />
             </div>
           </div>
-          <StarRatingInput value={actionData?.fields.rating} />
+          <StarRatingInput defaultValue={actionData?.fields.rating} />
           <div className="flex flex-col gap-1">
             <label htmlFor="body">Comment</label>
             <small>Keep it honest, helpful, and constructive.</small>
