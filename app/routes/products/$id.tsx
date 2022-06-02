@@ -3,11 +3,11 @@ import type { LoaderFunction } from '@remix-run/node';
 import { json } from '@remix-run/node';
 import { Link, Outlet, useLoaderData } from '@remix-run/react';
 import invariant from 'tiny-invariant';
-import { StarRating } from '~/components/StarRating';
 
+import { StarRating } from '~/components/StarRating';
 import { getProductById } from '~/models/product.server';
 import { getRatingByProductId } from '~/models/review.server';
-import { getValueRoundedToDecimalPlaces } from '~/utils';
+import { getValueRoundedToDecimalPlaces } from '~/lib/utils';
 
 export type ProductLayoutLoaderData = {
   product: NonNullable<Prisma.PromiseReturnType<typeof getProductById>>;

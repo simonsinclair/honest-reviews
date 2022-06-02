@@ -23,7 +23,7 @@ import {
   getSanitisedPageParam,
   getSkipValue,
   getValueRoundedToDecimalPlaces,
-} from '~/utils';
+} from '~/lib/utils';
 import type { ProductLayoutLoaderData } from '~/routes/products/$id';
 import { DEFAULT_TAKE } from '~/lib/constants';
 import { Pagination } from '~/components/Pagination';
