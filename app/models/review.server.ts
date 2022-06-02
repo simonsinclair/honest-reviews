@@ -1,4 +1,5 @@
 import prisma from '~/services/database.server';
+import { DEFAULT_TAKE } from '~/lib/constants';
 
 export const getRatingByProductId = async ({ id }: { id: string }) => {
   return await prisma.review.aggregate({
@@ -15,7 +16,7 @@ export const getRatingByProductId = async ({ id }: { id: string }) => {
 export const getReviewsByProductId = async ({
   id,
   skip = 0,
-  take = 10,
+  take = DEFAULT_TAKE,
 }: {
   id: string;
   skip?: number;
