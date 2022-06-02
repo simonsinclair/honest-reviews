@@ -1,23 +1,32 @@
 import type { Prisma } from '@prisma/client';
 import type { LoaderFunction, MetaFunction } from '@remix-run/node';
 import { json } from '@remix-run/node';
-import { Link, useLoaderData } from '@remix-run/react';
+import { Link, useLoaderData, useSearchParams } from '@remix-run/react';
 import type { ChartData, ChartDataset } from 'chart.js';
 import { Chart, registerables } from 'chart.js';
 import { useEffect, useRef } from 'react';
 import invariant from 'tiny-invariant';
+
 import {
+  ChevronLeftIcon,
+  ChevronRightIcon,
   EditIcon,
 } from '~/components/Icons';
 import { StarRating } from '~/components/StarRating';
-
 import { TimeFromNow } from '~/components/TimeFromNow';
 import { useRouteData } from '~/hooks/useRouteData';
 import {
   getAverageDailyRatingsByProductId,
   getReviewsByProductId,
 } from '~/models/review.server';
-import type { ProductLayoutLoaderData } from '../$id';
+import {
+  getSanitisedPageParam,
+  getSkipValue,
+  getValueRoundedToDecimalPlaces,
+} from '~/utils';
+import type { ProductLayoutLoaderData } from '~/routes/products/$id';
+import { DEFAULT_TAKE } from '~/lib/constants';
+import { Pagination } from '~/components/Pagination';
 
 type LoaderData = {
   chart: {
@@ -45,6 +54,7 @@ export const meta: MetaFunction = ({ parentsData }) => {
 const ProductPage = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null!);
   const { chart, reviews } = useLoaderData<LoaderData>();
+  const [searchParams] = useSearchParams();
   const { rating } = useRouteData<ProductLayoutLoaderData>(
     'routes/products/$id',
   );
@@ -86,6 +96,9 @@ const ProductPage = () => {
     });
     return () => ratingTrendChart.destroy();
   }, [chart.data, chart.labels]);
+
+  const totalPages = Math.ceil((rating._count || 1) / DEFAULT_TAKE);
+  const currentPage = getSanitisedPageParam(searchParams.get('page'));
 
   return (
     <div className="container mx-auto grid grid-cols-12 gap-4 px-4">
@@ -139,18 +152,50 @@ const ProductPage = () => {
               </article>
             );
           })}
-          <div className="flex justify-center pt-6 pb-2">Pagination</div>
+          {totalPages > 1 ? (
+            <div className="flex items-center justify-center gap-1 pt-6 pb-2">
+              {currentPage > 1 ? (
+                <Link
+                  to={`?page=${currentPage - 1}`}
+                  className="flex items-center rounded-full p-2 shadow transition-colors hover:shadow-md"
+                >
+                  <span className="sr-only">Previous</span>
+                  <ChevronLeftIcon
+                    aria-hidden
+                    className="relative right-[0.0625rem]"
+                  />
+                </Link>
+              ) : null}
+              <Pagination totalPages={totalPages} currentPage={currentPage} />
+              {currentPage < totalPages ? (
+                <Link
+                  to={`?page=${currentPage + 1}`}
+                  className="flex items-center rounded-full p-2 shadow transition-colors hover:shadow-md"
+                >
+                  <span className="sr-only">Next</span>
+                  <ChevronRightIcon
+                    aria-hidden
+                    className="relative left-[0.0625rem]"
+                  />
+                </Link>
+              ) : null}
+            </div>
+          ) : null}
         </div>
       </section>
     </div>
   );
 };
 
-export const loader: LoaderFunction = async ({ params }) => {
+export const loader: LoaderFunction = async ({ params, request }) => {
   const { id } = params;
   invariant(id, 'Expected parameter `id` to be defined.');
 
-  const reviews = await getReviewsByProductId({ id });
+  const url = new URL(request.url);
+  const page = url.searchParams.get('page');
+  const skip = getSkipValue(getSanitisedPageParam(page), DEFAULT_TAKE);
+
+  const reviews = await getReviewsByProductId({ id, skip, take: DEFAULT_TAKE });
 
   const SME_DAYS = 30;
   const RANGE_DAYS = SME_DAYS * 6;
