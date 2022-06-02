@@ -107,6 +107,10 @@ const ProductPage = () => {
         </div>
         <div className="divide-y">
           {reviews.map(({ id, body, createdAt, rating, User }) => {
+            const averageRatingRounded = getValueRoundedToDecimalPlaces(
+              rating,
+              1,
+            );
             return (
               <article key={id} className="flex flex-col-reverse gap-4 py-4">
                 {body.split('\n').map((paragraph, index) => (
@@ -121,8 +125,9 @@ const ProductPage = () => {
                       {User.name}
                     </a>
                     <StarRating
-                      rating={getValueRoundedToDecimalPlaces(rating, 1)}
+                      rating={averageRatingRounded}
                       size={14}
+                      ariaLabel={`Rated ${averageRatingRounded} out of 5.`}
                     />
                   </div>
                   <TimeFromNow date={createdAt} />

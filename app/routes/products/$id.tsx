@@ -35,7 +35,11 @@ const ProductLayout = () => {
             </Link>
           </h1>
           <div className="flex items-center gap-2">
-            <StarRating rating={averageRatingRounded} size={20} />
+            <StarRating
+              rating={averageRatingRounded}
+              size={20}
+              ariaLabel={`Rated ${averageRatingRounded} out of 5.`}
+            />
             <span
               aria-hidden
               className="leading-none opacity-75 before:mr-2 before:content-['•']"
