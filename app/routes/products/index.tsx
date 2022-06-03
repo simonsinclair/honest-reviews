@@ -1,12 +1,14 @@
-import type { Product } from '@prisma/client';
 import { json } from '@remix-run/node';
 import type { LoaderFunction, MetaFunction } from '@remix-run/node';
 import { Link, useLoaderData } from '@remix-run/react';
+import type { Prisma } from '@prisma/client';
 
 import { getProducts } from '~/models/product.server';
+import { StarRatingLink } from '~/components/StarRatingLink';
+import { getValueRoundedToDecimalPlaces } from '~/lib/utils';
 
 type LoaderData = {
-  products: Product[];
+  products: Prisma.PromiseReturnType<typeof getProducts>;
 };
 
 export const meta: MetaFunction = () => ({
@@ -27,22 +29,35 @@ const ProductsPage = () => {
       <div className="container mx-auto px-4">
         {products.length > 0 ? (
           <div className="grid grid-cols-12 gap-4">
-            {products.map(({ id, name, description }) => (
-              <div
-                className="col-span-full space-y-2 rounded-lg bg-white p-4 shadow-sm lg:col-span-8"
-                key={id}
-              >
-                <h2>
-                  <Link
-                    to={`/products/${id}`}
-                    className="font-bold hover:underline"
+            {products.map(
+              ({ id, name, description, ratingAvg, ratingCount }) => {
+                const averageRatingRounded = getValueRoundedToDecimalPlaces(
+                  ratingAvg,
+                  1,
+                );
+                return (
+                  <div
+                    className="col-span-full space-y-2 rounded-lg bg-white p-4 shadow-sm lg:col-span-8"
+                    key={id}
                   >
-                    {name}
-                  </Link>
-                </h2>
-                <p>{description}</p>
-              </div>
-            ))}
+                    <h2>
+                      <Link
+                        to={`/products/${id}`}
+                        className="font-bold hover:underline"
+                      >
+                        {name}
+                      </Link>
+                    </h2>
+                    <StarRatingLink
+                      rating={averageRatingRounded}
+                      ratingCount={ratingCount}
+                      href={`/products/${id}#reviews`}
+                    />
+                    <p>{description}</p>
+                  </div>
+                );
+              },
+            )}
           </div>
         ) : (
           <p>There are no products to display.</p>
@@ -56,6 +71,7 @@ export const loader: LoaderFunction = async () => {
   const data: LoaderData = {
     products: await getProducts(),
   };
+
   return json(data);
 };
 
