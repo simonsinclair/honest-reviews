@@ -3,6 +3,7 @@ import {
   getSanitisedPageParam,
   getSkipValue,
 } from '~/lib/utils';
+import { DEFAULT_TAKE } from '../constants';
 
 describe('getNumberRoundedToDecimalPlaces', () => {
   it.each([
@@ -38,7 +39,7 @@ describe('getSanitisedPageParam', () => {
 describe('getSkipValue', () => {
   it.each([
     { pageNum: 1, takeValue: 0, returnValue: 0 },
-    { pageNum: 1, takeValue: 10, returnValue: 0 },
+    { pageNum: 1, takeValue: DEFAULT_TAKE, returnValue: 0 },
     { pageNum: 2, takeValue: 20, returnValue: 20 },
   ])(
     'returns the number of items to skip to page $pageNum when a page has $takeValue items',
