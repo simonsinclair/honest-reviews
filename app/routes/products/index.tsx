@@ -22,8 +22,9 @@ const ProductsPage = () => {
   return (
     <>
       <div className="mb-4 bg-white shadow-sm">
-        <div className="container mx-auto p-4">
+        <div className="container mx-auto space-y-2 px-4 py-6">
           <h1>Products</h1>
+          <p>Discover the best products.</p>
         </div>
       </div>
       <div className="container mx-auto px-4">
