@@ -25,7 +25,7 @@ import {
   getValueRoundedToDecimalPlaces,
 } from '~/lib/utils';
 import type { ProductLayoutLoaderData } from '~/routes/products/$id';
-import { DEFAULT_TAKE } from '~/lib/constants';
+import { DEFAULT_TAKE, RATING_MAX } from '~/lib/constants';
 import { Pagination } from '~/components/Pagination';
 
 type LoaderData = {
@@ -144,7 +144,7 @@ const ProductPage = () => {
                     <StarRating
                       rating={averageRatingRounded}
                       size={14}
-                      ariaLabel={`Rated ${averageRatingRounded} out of 5.`}
+                      ariaLabel={`Rated ${averageRatingRounded} out of ${RATING_MAX}.`}
                     />
                   </div>
                   <TimeFromNow date={createdAt} />
