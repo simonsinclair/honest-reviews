@@ -67,6 +67,7 @@ const ProductPage = () => {
         labels: chart.labels,
         datasets: [
           {
+            label: '30-Day SMA',
             data: chart.data,
             animation: false,
             pointRadius: 0,
@@ -80,16 +81,8 @@ const ProductPage = () => {
       options: {
         scales: {
           y: {
-            min: 0,
-            max: 6,
-          },
-          x: {
-            display: false,
-          },
-        },
-        plugins: {
-          legend: {
-            display: false,
+            min: 1,
+            max: 5,
           },
         },
       },
@@ -103,10 +96,8 @@ const ProductPage = () => {
   return (
     <div className="container mx-auto grid grid-cols-12 gap-4 px-4">
       <div className="col-span-full lg:order-last lg:col-span-4">
-        <div className="space-y-4 rounded-lg bg-white p-4 shadow-sm">
-          <h2>
-            Rating trend <span className="opacity-75">30-Day SMA</span>
-          </h2>
+        <div className="space-y-2 rounded-lg bg-white p-4 shadow-sm lg:sticky lg:top-4">
+          <h2>Rating trend</h2>
           <canvas ref={canvasRef}>{/* To do: accessible content */}</canvas>
         </div>
       </div>
