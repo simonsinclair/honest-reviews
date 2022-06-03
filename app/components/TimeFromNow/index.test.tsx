@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 import { TimeFromNow } from '.';
 
 describe('TimeFromNow', () => {
-  it('displays a relative representation of the date now', () => {
+  it('renders the date now in relative form', () => {
     const dateNow = new Date();
 
     render(<TimeFromNow date={dateNow} />);
