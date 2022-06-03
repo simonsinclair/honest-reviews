@@ -5,7 +5,7 @@ import type { Prisma } from '@prisma/client';
 
 import { getProducts } from '~/models/product.server';
 import { StarRatingLink } from '~/components/StarRatingLink';
-import { getValueRoundedToDecimalPlaces } from '~/lib/utils';
+import { getNumberRoundedToDecimalPlaces } from '~/lib/utils';
 
 type LoaderData = {
   products: Prisma.PromiseReturnType<typeof getProducts>;
@@ -32,7 +32,7 @@ const ProductsPage = () => {
           <div className="grid grid-cols-12 gap-4">
             {products.map(
               ({ id, name, description, ratingAvg, ratingCount }) => {
-                const averageRatingRounded = getValueRoundedToDecimalPlaces(
+                const averageRatingRounded = getNumberRoundedToDecimalPlaces(
                   ratingAvg,
                   1,
                 );

@@ -22,7 +22,7 @@ import {
 import {
   getSanitisedPageParam,
   getSkipValue,
-  getValueRoundedToDecimalPlaces,
+  getNumberRoundedToDecimalPlaces,
 } from '~/lib/utils';
 import type { ProductLayoutLoaderData } from '~/routes/products/$id';
 import { DEFAULT_TAKE, RATING_MAX } from '~/lib/constants';
@@ -115,7 +115,7 @@ const ProductPage = () => {
         </div>
         <div className="divide-y">
           {reviews.map(({ id, body, createdAt, rating, User }) => {
-            const averageRatingRounded = getValueRoundedToDecimalPlaces(
+            const averageRatingRounded = getNumberRoundedToDecimalPlaces(
               rating,
               1,
             );

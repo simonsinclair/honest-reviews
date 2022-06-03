@@ -1,5 +1,5 @@
-export const getValueRoundedToDecimalPlaces = (
-  value: number,
+export const getNumberRoundedToDecimalPlaces = (
+  number: number,
   decimalPlaces: number,
 ) => {
   const roundingFactor = Math.pow(10, decimalPlaces);

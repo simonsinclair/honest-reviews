@@ -6,7 +6,7 @@ import invariant from 'tiny-invariant';
 
 import { getProductById } from '~/models/product.server';
 import { getRatingByProductId } from '~/models/review.server';
-import { getValueRoundedToDecimalPlaces } from '~/lib/utils';
+import { getNumberRoundedToDecimalPlaces } from '~/lib/utils';
 import { StarRatingLink } from '~/components/StarRatingLink';
 
 export type ProductLayoutLoaderData = {
@@ -17,7 +17,7 @@ export type ProductLayoutLoaderData = {
 const ProductLayout = () => {
   const { product, rating } = useLoaderData<ProductLayoutLoaderData>();
 
-  const averageRatingRounded = getValueRoundedToDecimalPlaces(
+  const averageRatingRounded = getNumberRoundedToDecimalPlaces(
     rating._avg.rating ?? 0,
     1,
   );
