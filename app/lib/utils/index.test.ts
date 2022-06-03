@@ -1,4 +1,7 @@
-import { getNumberRoundedToDecimalPlaces } from '~/lib/utils';
+import {
+  getNumberRoundedToDecimalPlaces,
+  getSanitisedPageParam,
+} from '~/lib/utils';
 
 describe('getNumberRoundedToDecimalPlaces', () => {
   it.each([
@@ -15,4 +18,18 @@ describe('getNumberRoundedToDecimalPlaces', () => {
       );
     },
   );
+});
+
+describe('getSanitisedPageParam', () => {
+  it.each([
+    { page: null, returnValue: 1 },
+    { page: '', returnValue: 1 },
+    { page: 'foo', returnValue: 1 },
+    { page: '-1', returnValue: 1 },
+    { page: '0', returnValue: 1 },
+    { page: '1', returnValue: 1 },
+    { page: '2', returnValue: 2 },
+  ])('sanitises "$page" to a valid page number', ({ page, returnValue }) => {
+    expect(getSanitisedPageParam(page)).toBe(returnValue);
+  });
 });
