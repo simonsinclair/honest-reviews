@@ -6,6 +6,7 @@ import { RATING_MAX } from '~/lib/constants';
 
 type Props = {
   defaultValue?: string;
+  ratingMax?: number;
 };
 
 const isChecked = (value: Props['defaultValue'], match: string) => {
@@ -13,7 +14,10 @@ const isChecked = (value: Props['defaultValue'], match: string) => {
   return value === match;
 };
 
-export const StarRatingInput = ({ defaultValue }: Props) => {
+export const StarRatingInput = ({
+  defaultValue,
+  ratingMax = RATING_MAX,
+}: Props) => {
   const [rating, setRating] = useState(0);
 
   const handleOnChange: ChangeEventHandler<HTMLInputElement> = (event) => {
@@ -26,7 +30,7 @@ export const StarRatingInput = ({ defaultValue }: Props) => {
       <div className="relative">
         <StarRating rating={rating} size={48} />
         <div className="absolute inset-0 flex font-mono">
-          {Array.from({ length: RATING_MAX }, (_, index) => index + 1).map(
+          {Array.from({ length: ratingMax }, (_, index) => index + 1).map(
             (value) => (
               <div key={value}>
                 <input
