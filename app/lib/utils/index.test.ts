@@ -1,6 +1,7 @@
 import {
   getNumberRoundedToDecimalPlaces,
   getSanitisedPageParam,
+  getSkipValue,
 } from '~/lib/utils';
 
 describe('getNumberRoundedToDecimalPlaces', () => {
@@ -32,4 +33,17 @@ describe('getSanitisedPageParam', () => {
   ])('sanitises "$page" to a valid page number', ({ page, returnValue }) => {
     expect(getSanitisedPageParam(page)).toBe(returnValue);
   });
+});
+
+describe('getSkipValue', () => {
+  it.each([
+    { pageNum: 1, takeValue: 0, returnValue: 0 },
+    { pageNum: 1, takeValue: 10, returnValue: 0 },
+    { pageNum: 2, takeValue: 20, returnValue: 20 },
+  ])(
+    'returns the number of items to skip to page $pageNum when a page has $takeValue items',
+    ({ pageNum, takeValue, returnValue }) => {
+      expect(getSkipValue(pageNum, takeValue)).toBe(returnValue);
+    },
+  );
 });
