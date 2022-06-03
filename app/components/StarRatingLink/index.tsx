@@ -10,7 +10,10 @@ type Props = {
 };
 
 export const StarRatingLink = ({ rating, ratingCount, href }: Props) => (
-  <Link to={href} className="group flex items-center gap-2 leading-none">
+  <Link
+    to={href}
+    className="group flex w-min items-center gap-2 whitespace-nowrap leading-none"
+  >
     <StarRating
       rating={rating}
       size={20}
