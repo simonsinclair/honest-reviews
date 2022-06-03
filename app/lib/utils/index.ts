@@ -3,7 +3,9 @@ export const getNumberRoundedToDecimalPlaces = (
   decimalPlaces: number,
 ) => {
   const roundingFactor = Math.pow(10, decimalPlaces);
-  return Math.round(value * roundingFactor) / roundingFactor;
+  return (
+    Math.round((number + Number.EPSILON) * roundingFactor) / roundingFactor
+  );
 };
 
 /**
