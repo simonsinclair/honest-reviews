@@ -9,49 +9,53 @@ type Props = {
   ratingMax?: number;
 };
 
-const isChecked = (value: Props['defaultValue'], match: string) => {
-  if (value === undefined) return false;
-  return value === match;
+const getFieldData = (_: never, index: number) => {
+  const value = String(index + 1);
+  return {
+    id: `rating-${value}`,
+    value,
+    isChecked: (rating: number) => rating === Number(value),
+  };
 };
 
 export const StarRatingInput = ({
-  defaultValue,
+  defaultValue = '0',
   ratingMax = RATING_MAX,
 }: Props) => {
-  const [rating, setRating] = useState(0);
+  const [rating, setRating] = useState(Number(defaultValue));
 
   const handleOnChange: ChangeEventHandler<HTMLInputElement> = (event) => {
     setRating(Number(event.target.value));
   };
 
+  const fieldsData = Array.from({ length: ratingMax }, getFieldData);
+
   return (
-    <fieldset className="flex flex-col gap-1">
+    <fieldset className="flex flex-col gap-1" role="radiogroup">
       <legend>Rating</legend>
       <div className="relative">
         <StarRating rating={rating} size={48} />
         <div className="absolute inset-0 flex font-mono">
-          {Array.from({ length: ratingMax }, (_, index) => index + 1).map(
-            (value) => (
-              <div key={value}>
-                <input
-                  className="peer sr-only"
-                  onChange={handleOnChange}
-                  type="radio"
-                  name="rating"
-                  id={`rating-${value}`}
-                  value={String(value)}
-                  defaultChecked={isChecked(defaultValue, String(value))}
-                  required
-                />
-                <label
-                  htmlFor={`rating-${value}`}
-                  className="flex h-12 w-12 cursor-pointer items-center justify-center pt-0.5 peer-focus-visible:ring"
-                >
-                  {value}
-                </label>
-              </div>
-            ),
-          )}
+          {fieldsData.map(({ id, isChecked, value }) => (
+            <div key={id}>
+              <input
+                className="peer sr-only"
+                onChange={handleOnChange}
+                type="radio"
+                name="rating"
+                id={id}
+                value={value}
+                defaultChecked={isChecked(rating)}
+                required
+              />
+              <label
+                htmlFor={id}
+                className="flex h-12 w-12 cursor-pointer items-center justify-center pt-0.5 font-bold text-white peer-focus-visible:ring"
+              >
+                {value}
+              </label>
+            </div>
+          ))}
         </div>
       </div>
     </fieldset>
