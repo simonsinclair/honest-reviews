@@ -6,3 +6,6 @@
 node_modules
 /public/build
 honest-reviews.db
+/e2e-results
+/playwright-report
+/playwright/.cache

@@ -10,9 +10,10 @@
     "dev:remix": "remix dev",
     "dev:tailwind": "tailwindcss -i ./css/main.css -o ./app/css/main.css --watch",
     "dev:init": "prisma migrate reset --force",
-    "test": "npm run test:unit",
+    "test": "npm run test:unit && npm run test:e2e",
     "test:unit": "vitest",
     "test:unit:coverage": "vitest run --coverage",
+    "test:e2e": "playwright test",
     "start": "remix-serve build"
   },
   "dependencies": {
@@ -29,6 +30,7 @@
   },
   "devDependencies": {
     "@faker-js/faker": "^7.1.0",
+    "@playwright/test": "^1.22.2",
     "@remix-run/dev": "^1.5.1",
     "@remix-run/eslint-config": "^1.5.1",
     "@testing-library/jest-dom": "^5.16.4",
