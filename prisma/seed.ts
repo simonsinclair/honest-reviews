@@ -1,6 +1,8 @@
 import { PrismaClient } from '@prisma/client';
 import { faker } from '@faker-js/faker';
 
+import { getNewReview } from 'test/data';
+
 const prisma = new PrismaClient();
 
 const seed = async () => {
@@ -14,12 +16,14 @@ const seed = async () => {
   const users = Array.from(
     { length: faker.datatype.number({ min: 500, max: 700 }) },
     () => {
-      const firstName = faker.name.firstName();
-      const lastName = faker.name.lastName();
-
+      const { name, email, rating, comment } = getNewReview();
       return {
-        email: faker.internet.email(firstName, lastName),
-        name: `${firstName} ${lastName}`,
+        name,
+        email,
+        initialReview: {
+          rating,
+          comment,
+        },
       };
     },
   );
@@ -37,10 +41,8 @@ const seed = async () => {
         createdAt,
         reviews: {
           create: {
-            rating: faker.datatype.number({ min: 1, max: 5 }),
-            body: faker.lorem.paragraphs(
-              faker.datatype.number({ min: 1, max: 3 }),
-            ),
+            rating: user.initialReview.rating,
+            body: user.initialReview.comment,
             productId: product.id,
             createdAt,
             createdAtDay,
