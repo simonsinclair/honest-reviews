@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
-import { getNewReview } from 'test/data';
 
+import { getNewReview } from '../test/data';
 import { RATING_MAX } from '~/lib/constants';
 
 test.describe('smoke', () => {
