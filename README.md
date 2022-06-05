@@ -134,4 +134,4 @@ The rating trend chart is based on a 30-Day Simple Moving Average, which assumes
 
 ### User authentication
 
-A user is currently identified by their email address, and without authentication it's possible for users to imitate other users. In practice, this means User A (user-a@gmail.com) can post a review as User B (user-b@gmail.com) by filling in the review form inaccurately. In order to prevent this, users must verify their identity.
+It's currently possible for users to imitate other users. In practice, this means User A (user-a@gmail.com) can post a review as User B (user-b@gmail.com) by filling in the review form inaccurately. In order to prevent this, we should verify a user's identity through authentication before posting a review.
