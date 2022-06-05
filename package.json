@@ -11,6 +11,8 @@
     "dev:tailwind": "tailwindcss -i ./css/main.css -o ./app/css/main.css --watch",
     "dev:init": "prisma migrate dev",
     "test": "npm run test:unit && npm run test:e2e",
+    "test:format": "prettier --check \"app/**/*.{ts,tsx}\" \"e2e/**/*.{ts,tsx}\"",
+    "test:static": "npm run test:format && tsc --noEmit && eslint --ext ts,tsx app/ e2e/",
     "test:unit": "vitest",
     "test:unit:coverage": "vitest run --coverage",
     "test:e2e": "playwright test",
