@@ -8,5 +8,10 @@ type Props = {
 };
 
 export const TimeFromNow = ({ date }: Props) => {
-  return <time dateTime={date.toString()}>{dayjs(date).fromNow()}</time>;
+  const dateTimeString = date.toString();
+  return (
+    <time dateTime={dateTimeString} title={dateTimeString}>
+      {dayjs(date).fromNow()}
+    </time>
+  );
 };
