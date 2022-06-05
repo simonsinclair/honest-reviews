@@ -6,7 +6,7 @@ Discover the best products.
 
 ### Prerequisites
 
-- Git
+1. Git
 
 ```sh
 git clone https://github.com/simonsinclair/honest-reviews.git
@@ -17,17 +17,17 @@ cd honest-reviews
 
 ### Production
 
+Run Honest Reviews from a Docker container exposed at http://localhost:3000.
+
 #### Prerequisites
 
-- [Setup](#setup)
-- Docker
+1. [Setup](#setup)
+2. Docker
 
 ```sh
 docker build --tag honest-reviews .
 docker run --name honest-reviews --publish 3000:3000 honest-reviews
 ```
-
-The application will be available at http://localhost:3000.
 
 ##### :octocat: To seed the production database, run:
 
@@ -35,23 +35,23 @@ The application will be available at http://localhost:3000.
 docker exec honest-reviews npx prisma db seed
 ```
 
-_Note: This can be run as many times as you like._
+_Note: The seed script is idempotent and can be run as many times as required._
 
 ### Development
 
+Run Honest Reviews in development mode at http://localhost:3000.
+
 #### Prerequisites
 
-- [Setup](#setup)
-- Node.js: >=14
-  1. `cp .env.example .env` to create an `.env` file. See [Environment variables](#environment-variables).
-  2. `npm i` to install package dependencies.
-  3. `npm run dev:init` to create and seed the database.
+1. [Setup](#setup)
+2. Node.js: `>=14`
+3. `npm i` to install package dependencies.
+4. `cp .env.example .env` to create an `.env` file. See [Environment variables](#environment-variables).
+5. `npm run dev:init` to create and seed the database.
 
 ```sh
 npm run dev
 ```
-
-The application will be available at http://localhost:3000.
 
 ## Testing
 
