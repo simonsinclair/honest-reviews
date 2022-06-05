@@ -61,7 +61,7 @@ npm run dev
 | --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
 | `/`                         | Redirects to `/products` (the current homepage). This gives us room to have a root homepage in future.                                      |
 | `/products`                 | The products page – a listing of all products in the database.                                                                              |
-| `/products/$id`             | The product identified by `$id`'s' page.                                                                                                    |
+| `/products/$id`             | The product identified by `$id`'s page.                                                                                                     |
 | `/products/$id/reviews`     | Redirects to `/products/$id#reviews`. A vanity URL to improve the experience of people querying the visible URL structure. See route below. |
 | `/products/$id/reviews/new` | The review form for the product identified by `$id`.                                                                                        |
 
