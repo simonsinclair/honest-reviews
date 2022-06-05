@@ -27,3 +27,15 @@ export const getSanitisedPageParam = (page: string | null) => {
 export const getSkipValue = (pageNum: number, takeValue: number) => {
   return pageNum * takeValue - takeValue;
 };
+
+/**
+ * Serialise a chart's values into a human-readable string.
+ * @param labelValuePairs An array of x-axis label and y-axis value pairs.
+ * @returns A chart's values as a human-readable string.
+ */
+export const getChartDataAltText = (labelValuePairs: [string, number][]) => {
+  const segments = labelValuePairs.map(([label, value]) => {
+    return `${label}: ${getNumberRoundedToDecimalPlaces(value, 1)}.`;
+  });
+  return segments.join(' ');
+};

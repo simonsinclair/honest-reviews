@@ -1,4 +1,5 @@
 import {
+  getChartDataAltText,
   getNumberRoundedToDecimalPlaces,
   getSanitisedPageParam,
   getSkipValue,
@@ -45,6 +46,25 @@ describe('getSkipValue', () => {
     'returns the number of items to skip to page $pageNum when a page has $takeValue items',
     ({ pageNum, takeValue, returnValue }) => {
       expect(getSkipValue(pageNum, takeValue)).toBe(returnValue);
+    },
+  );
+});
+
+describe('getChartDataAltText', () => {
+  it.each<{ labelValuePairs: [string, number][]; returnValue: string }>([
+    { labelValuePairs: [], returnValue: '' },
+    { labelValuePairs: [['A', 1]], returnValue: 'A: 1.' },
+    {
+      labelValuePairs: [
+        ['A', 1],
+        ['B', 2],
+      ],
+      returnValue: 'A: 1. B: 2.',
+    },
+  ])(
+    'serialises chart data into a human-readable string when label and value pairs are "$labelValuePairs"',
+    ({ labelValuePairs, returnValue }) => {
+      expect(getChartDataAltText(labelValuePairs)).toBe(returnValue);
     },
   );
 });

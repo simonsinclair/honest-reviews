@@ -2,7 +2,6 @@ import type { Prisma } from '@prisma/client';
 import type { LoaderFunction, MetaFunction } from '@remix-run/node';
 import { json } from '@remix-run/node';
 import { Link, useLoaderData, useSearchParams } from '@remix-run/react';
-import type { ChartData, ChartDataset } from 'chart.js';
 import { Chart, registerables } from 'chart.js';
 import { useEffect, useRef } from 'react';
 import invariant from 'tiny-invariant';
@@ -23,6 +22,7 @@ import {
   getSanitisedPageParam,
   getSkipValue,
   getNumberRoundedToDecimalPlaces,
+  getChartDataAltText,
 } from '~/lib/utils';
 import type { ProductLayoutLoaderData } from '~/routes/products/$id';
 import { DEFAULT_TAKE, RATING_MAX } from '~/lib/constants';
@@ -30,8 +30,8 @@ import { Pagination } from '~/components/Pagination';
 
 type LoaderData = {
   chart: {
-    labels: ChartData<'line'>['labels'];
-    data: ChartDataset<'line'>['data'];
+    labels: string[];
+    data: number[];
   };
   reviews: NonNullable<Prisma.PromiseReturnType<typeof getReviewsByProductId>>;
 };
@@ -98,7 +98,16 @@ const ProductPage = () => {
       <div className="col-span-full lg:order-last lg:col-span-4">
         <div className="space-y-2 rounded-lg bg-white p-4 shadow-sm lg:sticky lg:top-4">
           <h2>Rating trend</h2>
-          <canvas ref={canvasRef}>{/* To do: accessible content */}</canvas>
+          <canvas
+            ref={canvasRef}
+            role="img"
+            aria-label={`A line chart showing rating as a 30-Day Simple Moving Average. ${getChartDataAltText(
+              chart.data.map((value, index) => [
+                chart.labels[index] ?? 'Unknown',
+                value,
+              ]),
+            )}`}
+          />
         </div>
       </div>
       <section className="col-span-full rounded-lg bg-white p-4 shadow-sm lg:col-span-8">
