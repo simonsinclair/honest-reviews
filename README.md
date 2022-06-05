@@ -67,9 +67,19 @@ The application will be available at http://localhost:3000.
 
 ## Environment variables
 
----
+### `DATABASE_URL`
 
-## Choices
+We use Prisma – a type-safe ORM with support for the following databases: PostgreSQL, MySQL, SQLite, SQL Server, MongoDB, and CockroachDB.
+
+Our current database is SQLite (as defined by the default `DATABASE_URL` found in [.env.example](.env.example)). To use another supported relational database, update this value.
+
+#### For example
+
+To use a PostgreSQL database, your `.env` file might contain the following:
+
+```sh
+DATABASE_URL="postgresql://test:test@localhost:5432/test?schema=public"
+```
 
 ## Improvements
 
