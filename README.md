@@ -122,4 +122,14 @@ DATABASE_URL="postgresql://test:test@localhost:5432/test?schema=public"
 
 ## Improvements
 
-- The rating's trend chart assumes we have a least one rating for every day. In practice, this may not be the case. As an improvement, we should fill gaps in rating data with the last known 'good' data. For example [2, 3, null, 4] => [2, 3, 3, 4].
+### Rating trend chart
+
+#### Data
+
+The rating trend chart is based on a 30-Day Simple Moving Average, which assumes we have at least one rating for every day. In practice, this may not be the case. For days where we have no reviews, we should carry the previous day's rating over to fill in the gap.
+
+##### I.E.
+
+```ts
+[2, 3, null, 4] => [2, 3, 3, 4].
+```
