@@ -122,14 +122,16 @@ DATABASE_URL="postgresql://test:test@localhost:5432/test?schema=public"
 
 ## Future
 
-### Rating trend chart
+### Rating trend data
 
-#### Data
+The rating trend chart is based on a 30-Day Simple Moving Average, which assumes there is at least one rating for every day. In practice, this may not be the case. For days where there are no reviews, we should carry over the previous day's rating.
 
-The rating trend chart is based on a 30-Day Simple Moving Average, which assumes we have at least one rating for every day. In practice, this may not be the case. For days where we have no reviews, we should carry the previous day's rating over to fill in the gap.
-
-##### I.E.
+#### I.E.
 
 ```ts
 [2, 3, null, 4] => [2, 3, 3, 4].
 ```
+
+### User authentication
+
+A user is currently identified by their email address, and without authentication it's possible for users to imitate other users. In practice, this means User A (user-a@gmail.com) can post a review as User B (user-b@gmail.com) by filling in the review form inaccurately. In order to prevent this, users must verify their identity.
