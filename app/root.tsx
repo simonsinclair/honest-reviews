@@ -15,7 +15,8 @@ import { Masthead } from './components/Masthead';
 export const meta: MetaFunction = () => ({
   charset: 'utf-8',
   title: 'Honest Reviews',
-  description: 'Read and write honest product reviews.',
+  description:
+    'Honest product reviews to help buyers make the best purchase decisions.',
   viewport: 'width=device-width,initial-scale=1',
 });
 

@@ -1,6 +1,6 @@
 # Honest Reviews
 
-Discover the best products.
+Honest product reviews to help buyers make the best purchase decisions.
 
 ## Setup
 
