@@ -53,7 +53,46 @@ Run Honest Reviews in development mode at http://localhost:3000.
 npm run dev
 ```
 
-## Testing
+### Automated tests
+
+Run the Honest Reviews application test suite all at once or individiually (by type).
+
+#### Prerequisites
+
+1. All [Development Prequisites](#prerequisites-2).
+2. `npx playwright install` to install browser binaries required by Playwright.
+
+### All ([Static](#static), [Unit](#unit), and [E2E](#e2e))
+
+```sh
+npm test
+```
+
+### Static
+
+Analyse all application code for formatting, linting, and type errors.
+
+```sh
+npm run test:static
+```
+
+### Unit
+
+Verify isolated parts of the application, such as React components, work as expected.
+
+```sh
+npm run test:unit
+```
+
+#### :octocat: See a coverage report by running `npm run test:unit:coverage`.
+
+### E2E
+
+Verify critical user flows, such as posting a product review, function as expected.
+
+```sh
+npm run test:e2e
+```
 
 ## Routes
 
