@@ -35,7 +35,7 @@ docker run --name honest-reviews --publish 3000:3000 honest-reviews
 docker exec honest-reviews npx prisma db seed
 ```
 
-_Note: The seed script is idempotent and can be run as many times as required._
+_Note: The seed script will create a new product and accompanying user reviews. It is idempotent and can be run as many times as required._
 
 ### Development
 
@@ -47,7 +47,7 @@ Run the Honest Reviews application in development mode at http://localhost:3000.
 2. Node.js: `>=14`
 3. `npm i` to install package dependencies.
 4. `cp .env.example .env` to create an `.env` file. See [Environment variables](#environment-variables).
-5. `npm run dev:init` to create and seed the database.
+5. `npm run dev:init` to create, migrate, and seed the database.
 
 ```sh
 npm run dev
@@ -55,14 +55,14 @@ npm run dev
 
 ### Automated tests
 
-Run the Honest Reviews application test suite all at once or individiually (by type).
+Run the Honest Reviews application test suite all together or individiually by type.
 
 #### Prerequisites
 
 1. All [Development Prequisites](#prerequisites-2).
-2. `npx playwright install` to install browser binaries required by Playwright.
+2. `npx playwright install` to install browser binaries required by Playwright E2E tests.
 
-### All ([Static](#static), [Unit](#unit), and [E2E](#e2e))
+### All together ([Static](#static), [Unit](#unit), and [E2E](#e2e))
 
 ```sh
 npm test
@@ -88,7 +88,7 @@ npm run test:unit
 
 ### E2E
 
-Verify critical user flows, such as posting a product review, function as expected.
+Verify critical user flows, such as posting a product review, work as expected.
 
 ```sh
 npm run test:e2e
@@ -120,7 +120,7 @@ To use a PostgreSQL database, your `.env` file might contain the following:
 DATABASE_URL="postgresql://test:test@localhost:5432/test?schema=public"
 ```
 
-## Improvements
+## Future
 
 ### Rating trend chart
 
