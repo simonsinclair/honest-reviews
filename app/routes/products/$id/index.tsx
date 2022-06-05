@@ -67,7 +67,7 @@ const ProductPage = () => {
         labels: chart.labels,
         datasets: [
           {
-            label: '30-Day SMA',
+            label: '30-Day Simple Moving Average',
             data: chart.data,
             animation: false,
             pointRadius: 0,
