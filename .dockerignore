@@ -1,0 +1,16 @@
+.DS_Store
+
+node_modules
+
+/.cache
+/app/css
+/build
+/public/build
+.env
+honest-reviews.db
+honest-reviews.db-journal
+
+/coverage
+/e2e-results
+/playwright-report
+/playwright/.cache
