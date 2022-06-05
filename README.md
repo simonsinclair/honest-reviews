@@ -17,7 +17,7 @@ cd honest-reviews
 
 ### Production
 
-Run Honest Reviews from a Docker container exposed at http://localhost:3000.
+Run a production version of the Honest Reviews application from a Docker container exposed at http://localhost:3000.
 
 #### Prerequisites
 
@@ -39,7 +39,7 @@ _Note: The seed script is idempotent and can be run as many times as required._
 
 ### Development
 
-Run Honest Reviews in development mode at http://localhost:3000.
+Run the Honest Reviews application in development mode at http://localhost:3000.
 
 #### Prerequisites
 
