@@ -135,3 +135,11 @@ The rating trend chart is based on a 30-Day Simple Moving Average, which assumes
 ### User authentication
 
 It's currently possible for users to imitate other users. In practice, this means User A (user-a@gmail.com) can post a review as User B (user-b@gmail.com) by filling in the review form inaccurately. In order to prevent this, we should verify a user's identity through authentication before they can post a review.
+
+### E2E test isolation
+
+We should isolate our E2E environment to allow tests to create, update, and delete data without affecting the main application.
+
+### Test action responses
+
+Our server-side review posting logic exists within a [Remix Action](https://remix.run/docs/en/v1/api/conventions#action). This function is exported from the `NewReviewPage` component and can therefore be tested in isolation. We should verify the action returns the expected Responses and throws the expected errors when presented with various request cases.
